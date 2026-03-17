@@ -8,6 +8,6 @@ public class MgcssTrackGrupo4Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MgcssTrackGrupo4Application.class, args);
-	}prueba
+	}
 
 }
