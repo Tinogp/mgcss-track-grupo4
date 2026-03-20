@@ -27,8 +27,5 @@ jobs:
     - name: Build and analyze
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_CLOUD }}
-      run: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-        -Dsonar.region=us \
-        -Dsonar.organization=tinogp \
-        -Dsonar.projectKey=Tinogp_mgcss-track-grupo4
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Tinogp_mgcss-track-grupo4
 
