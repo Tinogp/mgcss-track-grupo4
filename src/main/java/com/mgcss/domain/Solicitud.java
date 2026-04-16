@@ -21,6 +21,15 @@ public class Solicitud {
         this.estado_actual = Estado.ABIERTA;
     }
 
+    public Solicitud(Long id, String descripcion, LocalDateTime fechaCreacion, Estado estado_actual, Tecnico tecnicoAsignado, LocalDateTime fechaCierre) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.fechaCreacion = fechaCreacion;
+        this.estado_actual = estado_actual;
+        this.tecnicoAsignado = tecnicoAsignado;
+        this.fechaCierre = fechaCierre;
+    }
+
     public Long getId() {
         return id;
     }
