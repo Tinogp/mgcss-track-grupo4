@@ -2,6 +2,13 @@ package com.mgcss.domain;
 
 public class Tecnico {
 
+    public Tecnico(Long id, String nombre, Especialidad valueOf, boolean activo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.especialidad = valueOf;
+        this.activo = activo;
+    }
+
     public enum Especialidad {HARDWARE, SOFTWARE, REDES};
 
     private Long id;

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MgcssTrackGrupo4Application<mgcss-track-grupo4>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mgcss.MgcssTrackGrupo4Application",
+            "projectName": "mgcss-track-grupo4",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

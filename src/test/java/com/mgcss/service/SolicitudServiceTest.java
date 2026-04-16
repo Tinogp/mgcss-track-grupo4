@@ -2,6 +2,7 @@ package com.mgcss.service;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,6 +66,33 @@ public class SolicitudServiceTest {
         }, "Debería lanzar IllegalArgumentException si la solicitud no existe");
 
         // 3. Verify: Confirmamos que NUNCA se intentó guardar nada (muy importante)
+        verify(solicitudRepoMock, never()).save(any());
+    }
+
+    @Test
+    void asignarTecnico_SiTecnicoNoExiste_LanzaExcepcion() {
+        Solicitud solicitud = new Solicitud();
+        when(solicitudRepoMock.findById(1L)).thenReturn(Optional.of(solicitud));
+        when(tecnicoRepoMock.findById(99L)).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            solicitudService.asignarTecnico(1L, 99L);
+        }, "Debería lanzar IllegalArgumentException si el técnico no existe");
+
+        verify(solicitudRepoMock, never()).save(any());
+    }
+
+    @Test
+    void asignarTecnico_SiTecnicoInactivo_NoGuarda() {
+        Solicitud solicitud = new Solicitud();
+        Tecnico tecnicoInactivo = new Tecnico("Ana", Tecnico.Especialidad.HARDWARE);
+
+        when(solicitudRepoMock.findById(1L)).thenReturn(Optional.of(solicitud));
+        when(tecnicoRepoMock.findById(99L)).thenReturn(Optional.of(tecnicoInactivo));
+
+        boolean resultado = solicitudService.asignarTecnico(1L, 99L);
+
+        assertFalse(resultado, "Debería devolver false cuando el técnico está inactivo");
         verify(solicitudRepoMock, never()).save(any());
     }
 }
