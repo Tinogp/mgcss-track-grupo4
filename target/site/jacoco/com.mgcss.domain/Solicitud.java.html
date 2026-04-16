@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Solicitud.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.domain</a> &gt; <span class="el_source">Solicitud.java</span></div><h1>Solicitud.java</h1><pre class="source lang-java linenums">package com.mgcss.domain;
+
+import java.time.LocalDateTime;
+
+public class Solicitud {
+
+<span class="fc" id="L7">    public enum Estado {</span>
+<span class="fc" id="L8">        ABIERTA, CERRADA, EN_PROCESO</span>
+    };
+
+    private Long id;
+    private String descripcion;
+    private final LocalDateTime fechaCreacion;
+    private Estado estado_actual;
+    private Tecnico tecnicoAsignado;
+    private LocalDateTime fechaCierre;
+
+<span class="fc" id="L18">    public Solicitud() {</span>
+<span class="fc" id="L19">        this.fechaCreacion = LocalDateTime.now();</span>
+<span class="fc" id="L20">        this.fechaCierre = null;</span>
+<span class="fc" id="L21">        this.estado_actual = Estado.ABIERTA;</span>
+<span class="fc" id="L22">    }</span>
+
+<span class="fc" id="L24">    public Solicitud(Long id, String descripcion, LocalDateTime fechaCreacion, Estado estado_actual, Tecnico tecnicoAsignado, LocalDateTime fechaCierre) {</span>
+<span class="fc" id="L25">        this.id = id;</span>
+<span class="fc" id="L26">        this.descripcion = descripcion;</span>
+<span class="fc" id="L27">        this.fechaCreacion = fechaCreacion;</span>
+<span class="fc" id="L28">        this.estado_actual = estado_actual;</span>
+<span class="fc" id="L29">        this.tecnicoAsignado = tecnicoAsignado;</span>
+<span class="fc" id="L30">        this.fechaCierre = fechaCierre;</span>
+<span class="fc" id="L31">    }</span>
+
+    public Long getId() {
+<span class="fc" id="L34">        return id;</span>
+    }
+
+    public Estado getEstado() {
+<span class="fc" id="L38">        return estado_actual;</span>
+    }
+
+    public LocalDateTime getFechaCreacion() {
+<span class="fc" id="L42">        return fechaCreacion;</span>
+    }
+
+    public String getDescripcion() {
+<span class="fc" id="L46">        return descripcion;</span>
+    }
+
+    public boolean setDescripcion(String descripcion) {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (estado_actual != Estado.CERRADA) {</span>
+<span class="fc" id="L51">            this.descripcion = descripcion;</span>
+<span class="fc" id="L52">            return true;</span>
+        }
+<span class="fc" id="L54">        return false;</span>
+    }
+
+    public Estado getEstado_actual() {
+<span class="nc" id="L58">        return estado_actual;</span>
+    }
+
+    public LocalDateTime getFechaCierre() {
+<span class="fc" id="L62">        return fechaCierre;</span>
+    }
+
+    public Tecnico getTecnicoAsignado() {
+<span class="fc" id="L66">        return tecnicoAsignado;</span>
+    }
+
+    public boolean asignarTecnico(Tecnico tecnicoAsignado) {
+<span class="pc bpc" id="L70" title="3 of 6 branches missed.">        if ((Estado.ABIERTA.equals(this.estado_actual) || Estado.EN_PROCESO.equals(this.estado_actual)) &amp;&amp; tecnicoAsignado.isActivo()) {</span>
+<span class="fc" id="L71">            this.tecnicoAsignado = tecnicoAsignado;</span>
+<span class="fc" id="L72">            return true;</span>
+        } else {
+<span class="fc" id="L74">            return false;</span>
+        }
+    }
+
+    public boolean iniciarProceso() {
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">        if (Estado.ABIERTA.equals(this.estado_actual) &amp;&amp; this.tecnicoAsignado != null) {</span>
+<span class="fc" id="L80">            this.estado_actual = Estado.EN_PROCESO;</span>
+<span class="fc" id="L81">            return true;</span>
+        }
+<span class="fc" id="L83">        return false;</span>
+    }
+
+    public boolean cerrar() {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (Estado.EN_PROCESO.equals(this.estado_actual)) {</span>
+<span class="fc" id="L88">            this.estado_actual = Estado.CERRADA;</span>
+<span class="fc" id="L89">            this.fechaCierre = LocalDateTime.now();</span>
+<span class="fc" id="L90">            return true;</span>
+        }
+<span class="fc" id="L92">        return false;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

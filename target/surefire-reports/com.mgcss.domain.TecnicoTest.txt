@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.mgcss.domain.SolicitudTest
+Test set: com.mgcss.domain.TecnicoTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.279 s -- in com.mgcss.domain.SolicitudTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.mgcss.domain.TecnicoTest

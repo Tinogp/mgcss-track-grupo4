@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolicitudService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.service</a> &gt; <span class="el_source">SolicitudService.java</span></div><h1>SolicitudService.java</h1><pre class="source lang-java linenums">package com.mgcss.service;
+
+import com.mgcss.domain.Solicitud;
+import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.repository.SolicitudRepository;
+import com.mgcss.domain.repository.TecnicoRepository;
+
+public class SolicitudService {
+
+    private final SolicitudRepository solicitudRepository;
+    private final TecnicoRepository tecnicoRepository;
+
+<span class="fc" id="L13">    public SolicitudService(SolicitudRepository solicitudRepository, TecnicoRepository tecnicoRepository) {</span>
+<span class="fc" id="L14">        this.solicitudRepository = solicitudRepository;</span>
+<span class="fc" id="L15">        this.tecnicoRepository = tecnicoRepository;</span>
+<span class="fc" id="L16">    }</span>
+
+    public boolean asignarTecnico(Long solicitudId, Long tecnicoId) {
+        
+        // 1. Recuperamos y lanzamos excepción si no existen (Fail-Fast)
+<span class="fc" id="L21">        Solicitud solicitud = solicitudRepository.findById(solicitudId)</span>
+<span class="fc" id="L22">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;La solicitud con ID &quot; + solicitudId + &quot; no existe&quot;));</span>
+
+<span class="fc" id="L24">        Tecnico tecnico = tecnicoRepository.findById(tecnicoId)</span>
+<span class="fc" id="L25">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;El técnico con ID &quot; + tecnicoId + &quot; no existe&quot;));</span>
+
+        // 2. Delegamos al dominio
+<span class="fc" id="L28">        boolean asignado = solicitud.asignarTecnico(tecnico);</span>
+
+        // 3. Guardamos si fue exitoso
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (asignado) {</span>
+<span class="fc" id="L32">            solicitudRepository.save(solicitud);</span>
+<span class="fc" id="L33">            return true;</span>
+        }
+        
+<span class="fc" id="L36">        return false; </span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
