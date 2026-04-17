@@ -1,7 +1,11 @@
-package com.mgcss.service;
+package com.mgcss.unit.service;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -9,9 +13,7 @@ import static org.mockito.Mockito.when;
 
 import com.mgcss.domain.Tecnico;
 import com.mgcss.domain.repository.TecnicoRepository;
-import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.mgcss.service.TecnicoService;
 
 public class TecnicoServiceTest {
 

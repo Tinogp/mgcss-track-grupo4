@@ -1,4 +1,4 @@
-package com.mgcss.infrastructure;
+package com.mgcss.integration.infrastructure;
 
 import java.util.Optional;
 
@@ -10,13 +10,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
+import com.mgcss.infrastructure.SpringDataTecnicoRepository;
+import com.mgcss.infrastructure.SqlSolicitudRepository;
 import com.mgcss.infrastructure.persistence.TecnicoEntity;
 
-@DataJpaTest // Levanta contexto parcial de persistencia y base de datos H2 [cite: 475]
-@Tag("integration") // Diferenciación formal de tests [cite: 494, 514]
+@DataJpaTest // Levanta contexto parcial de persistencia y base de datos H2
+@ActiveProfiles("test")
+@Tag("integration") // Diferenciación formal de tests
 @Import(SqlSolicitudRepository.class)
 public class SolicitudIntegrationTest {
 
