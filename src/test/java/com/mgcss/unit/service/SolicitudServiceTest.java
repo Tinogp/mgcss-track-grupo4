@@ -1,4 +1,4 @@
-package com.mgcss.service;
+package com.mgcss.unit.service;
 
 import java.util.Optional;
 
@@ -17,6 +17,7 @@ import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
 import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.domain.repository.TecnicoRepository;
+import com.mgcss.service.SolicitudService;
 
 public class SolicitudServiceTest {
 

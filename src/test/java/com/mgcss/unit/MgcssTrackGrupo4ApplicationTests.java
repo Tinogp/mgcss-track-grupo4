@@ -1,4 +1,4 @@
-package com.mgcss;
+package com.mgcss.unit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
