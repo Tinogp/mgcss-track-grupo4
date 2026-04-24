@@ -1,5 +1,6 @@
 package com.mgcss.infrastructure;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public class SqlSolicitudRepository implements SolicitudRepository {
 
     @Override
     public Solicitud save(Solicitud solicitud) {
+        Objects.requireNonNull(solicitud, "solicitud");
         // Mapeo: Dominio -> Entidad
         SolicitudEntity entity = toEntity(solicitud);
         SolicitudEntity saved = jpaSolicitudRepo.save(entity);
@@ -38,7 +40,7 @@ public class SqlSolicitudRepository implements SolicitudRepository {
     // --- MAPPERS PRIVADOS ---
 
 private SolicitudEntity toEntity(Solicitud dominio) {
-        if (dominio == null) return null;
+        Objects.requireNonNull(dominio, "dominio");
         
         SolicitudEntity entity = new SolicitudEntity();
         entity.setId(dominio.getId());
