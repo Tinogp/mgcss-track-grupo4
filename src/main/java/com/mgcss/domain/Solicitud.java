@@ -6,29 +6,29 @@ public class Solicitud {
 
     public enum Estado {
         ABIERTA, CERRADA, EN_PROCESO
-    };
+    }
 
     private Long id;
     private Cliente cliente;
     private String descripcion;
     private final LocalDateTime fechaCreacion;
-    private Estado estado_actual;
+    private Estado estadoActual;
     private Tecnico tecnicoAsignado;
     private LocalDateTime fechaCierre;
 
     public Solicitud(Cliente cliente){
         this.fechaCreacion = LocalDateTime.now();
         this.fechaCierre = null;
-        this.estado_actual = Estado.ABIERTA;
+        this.estadoActual = Estado.ABIERTA;
         this.cliente = cliente;
     }
 
-    public Solicitud(Long id, String descripcion, Cliente cliente,LocalDateTime fechaCreacion, Estado estado_actual, Tecnico tecnicoAsignado, LocalDateTime fechaCierre) {
+    public Solicitud(Long id, String descripcion, Cliente cliente,LocalDateTime fechaCreacion, Estado estadoActual, Tecnico tecnicoAsignado, LocalDateTime fechaCierre) {
         this.id = id;
         this.cliente = cliente;
         this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
-        this.estado_actual = estado_actual;
+        this.estadoActual = estadoActual;
         this.tecnicoAsignado = tecnicoAsignado;
         this.fechaCierre = fechaCierre;
     }
@@ -38,7 +38,7 @@ public class Solicitud {
     }
 
     public Estado getEstado() {
-        return estado_actual;
+        return estadoActual;
     }
 
     public LocalDateTime getFechaCreacion() {
@@ -50,7 +50,7 @@ public class Solicitud {
     }
 
     public boolean setDescripcion(String descripcion) {
-        if (estado_actual != Estado.CERRADA) {
+        if (estadoActual != Estado.CERRADA) {
             this.descripcion = descripcion;
             return true;
         }
@@ -61,8 +61,8 @@ public class Solicitud {
         return cliente;
     }
 
-    public Estado getEstado_actual() {
-        return estado_actual;
+    public Estado getEstadoActual() {
+        return estadoActual;
     }
 
     public LocalDateTime getFechaCierre() {
@@ -74,7 +74,7 @@ public class Solicitud {
     }
 
     public boolean asignarTecnico(Tecnico tecnicoAsignado) {
-        if ((Estado.ABIERTA.equals(this.estado_actual) || Estado.EN_PROCESO.equals(this.estado_actual)) && tecnicoAsignado.isActivo()) {
+        if ((Estado.ABIERTA.equals(this.estadoActual) || Estado.EN_PROCESO.equals(this.estadoActual)) && tecnicoAsignado.isActivo()) {
             this.tecnicoAsignado = tecnicoAsignado;
             return true;
         } else {
@@ -83,16 +83,16 @@ public class Solicitud {
     }
 
     public boolean iniciarProceso() {
-        if (Estado.ABIERTA.equals(this.estado_actual) && this.tecnicoAsignado != null) {
-            this.estado_actual = Estado.EN_PROCESO;
+        if (Estado.ABIERTA.equals(this.estadoActual) && this.tecnicoAsignado != null) {
+            this.estadoActual = Estado.EN_PROCESO;
             return true;
         }
         return false;
     }
 
     public boolean cerrar() {
-        if (Estado.EN_PROCESO.equals(this.estado_actual)) {
-            this.estado_actual = Estado.CERRADA;
+        if (Estado.EN_PROCESO.equals(this.estadoActual)) {
+            this.estadoActual = Estado.CERRADA;
             this.fechaCierre = LocalDateTime.now();
             return true;
         }

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.mgcss.infrastructure.SqlClienteRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.884 s -- in com.mgcss.infrastructure.SqlClienteRepositoryTest
