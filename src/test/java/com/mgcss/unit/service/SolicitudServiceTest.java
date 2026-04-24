@@ -15,6 +15,7 @@ import static org.mockito.Mockito.when;
 
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.Cliente;
 import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.domain.repository.TecnicoRepository;
 import com.mgcss.service.SolicitudService;
@@ -38,7 +39,7 @@ public class SolicitudServiceTest {
     @Test
     void debeAsignarTecnicoCorrectamente_YGuardarCambios() {
         // Arranque: Preparamos los datos puros del dominio
-        Solicitud solicitud = new Solicitud(); 
+        Solicitud solicitud = new Solicitud(new Cliente("Juan", "[EMAIL_ADDRESS]", Cliente.TipoCliente.STANDARD)); 
         Tecnico tecnico = new Tecnico("Ana", Tecnico.Especialidad.HARDWARE);
         tecnico.activar();
 
@@ -72,7 +73,7 @@ public class SolicitudServiceTest {
 
     @Test
     void asignarTecnico_SiTecnicoNoExiste_LanzaExcepcion() {
-        Solicitud solicitud = new Solicitud();
+        Solicitud solicitud = new Solicitud(new Cliente("Juan", "[EMAIL_ADDRESS]", Cliente.TipoCliente.STANDARD));
         when(solicitudRepoMock.findById(1L)).thenReturn(Optional.of(solicitud));
         when(tecnicoRepoMock.findById(99L)).thenReturn(Optional.empty());
 
@@ -85,7 +86,7 @@ public class SolicitudServiceTest {
 
     @Test
     void asignarTecnico_SiTecnicoInactivo_NoGuarda() {
-        Solicitud solicitud = new Solicitud();
+        Solicitud solicitud = new Solicitud(new Cliente("Juan", "[EMAIL_ADDRESS]", Cliente.TipoCliente.STANDARD));
         Tecnico tecnicoInactivo = new Tecnico("Ana", Tecnico.Especialidad.HARDWARE);
 
         when(solicitudRepoMock.findById(1L)).thenReturn(Optional.of(solicitud));

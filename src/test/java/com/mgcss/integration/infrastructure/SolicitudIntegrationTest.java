@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.Cliente;
 import com.mgcss.infrastructure.SpringDataTecnicoRepository;
 import com.mgcss.infrastructure.SqlSolicitudRepository;
 import com.mgcss.infrastructure.persistence.TecnicoEntity;
@@ -33,7 +34,7 @@ public class SolicitudIntegrationTest {
     @Test
     void debePersistirYRecuperarSolicitudCorrectamente() {
         // Arrange
-        Solicitud solicitud = new Solicitud();
+        Solicitud solicitud = new Solicitud(new Cliente("Juan", "[EMAIL_ADDRESS]", Cliente.TipoCliente.STANDARD));
         solicitud.setDescripcion("Fallo en el sistema de red");
 
         // Act
@@ -63,7 +64,7 @@ public class SolicitudIntegrationTest {
             tecnicoEntity.isActivo()
         );
 
-        Solicitud solicitud = new Solicitud();
+        Solicitud solicitud = new Solicitud(new Cliente("Juan", "[EMAIL_ADDRESS]", Cliente.TipoCliente.STANDARD));
         solicitud.setDescripcion("Falla de red");
         assertTrue(solicitud.asignarTecnico(tecnico));
 
