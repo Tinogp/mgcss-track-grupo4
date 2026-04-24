@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.Cliente;
 
 public class SolicitudTest {
 
@@ -19,7 +20,7 @@ public class SolicitudTest {
     @BeforeEach
     @SuppressWarnings("unused")
     void setUp() {
-        solicitud = new Solicitud();
+        solicitud = new Solicitud(new Cliente("Juan", "[EMAIL_ADDRESS]", Cliente.TipoCliente.STANDARD));
         tecnicoActivo = new Tecnico("Ana", Tecnico.Especialidad.HARDWARE);
         tecnicoActivo.activar();
     }

@@ -1,5 +1,6 @@
 package com.mgcss.infrastructure;
 
+import com.mgcss.domain.Cliente;
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.domain.Tecnico;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import com.mgcss.infrastructure.persistence.ClienteEntity;
 import com.mgcss.infrastructure.persistence.SolicitudEntity;
 import com.mgcss.infrastructure.persistence.TecnicoEntity;
 
@@ -36,8 +38,9 @@ public class SqlSolicitudRepository implements SolicitudRepository {
 
     // --- MAPPERS PRIVADOS ---
 
-    private SolicitudEntity toEntity(Solicitud dominio) {
+private SolicitudEntity toEntity(Solicitud dominio) {
         if (dominio == null) return null;
+        
         SolicitudEntity entity = new SolicitudEntity();
         entity.setId(dominio.getId());
         entity.setDescripcion(dominio.getDescripcion());
@@ -45,6 +48,7 @@ public class SqlSolicitudRepository implements SolicitudRepository {
         entity.setEstadoActual(dominio.getEstado().name());
         entity.setFechaCierre(dominio.getFechaCierre());
 
+        // 1. Mapear el Técnico (como ya teníamos)
         if (dominio.getTecnicoAsignado() != null) {
             TecnicoEntity tEntity = new TecnicoEntity();
             tEntity.setId(dominio.getTecnicoAsignado().getId());
@@ -53,11 +57,24 @@ public class SqlSolicitudRepository implements SolicitudRepository {
             tEntity.setActivo(dominio.getTecnicoAsignado().isActivo());
             entity.setTecnicoAsignado(tEntity);
         }
+
+        // 2. NUEVO: Mapear el Cliente
+        if (dominio.getCliente() != null) {
+            ClienteEntity cEntity = new ClienteEntity();
+            cEntity.setId(dominio.getCliente().getId());
+            cEntity.setNombre(dominio.getCliente().getNombre());
+            cEntity.setEmail(dominio.getCliente().getEmail());
+            cEntity.setTipoCliente(dominio.getCliente().getTipoCliente().name()); // Enum a String
+            entity.setCliente(cEntity);
+        }
+
         return entity;
     }
 
     private Solicitud toDomain(SolicitudEntity entity) {
         if (entity == null) return null;
+        
+        // 1. Reconstruir Técnico
         Tecnico tecnico = null;
         if (entity.getTecnicoAsignado() != null) {
             tecnico = new Tecnico(
@@ -67,9 +84,23 @@ public class SqlSolicitudRepository implements SolicitudRepository {
                 entity.getTecnicoAsignado().isActivo()
             );
         }
+
+        // 2. NUEVO: Reconstruir Cliente
+        Cliente cliente = null;
+        if (entity.getCliente() != null) {
+            cliente = new Cliente(
+                entity.getCliente().getId(),
+                entity.getCliente().getNombre(),
+                entity.getCliente().getEmail(),
+                Cliente.TipoCliente.valueOf(entity.getCliente().getTipoCliente()) // String a Enum
+            );
+        }
+
+        // 3. Devolver la Solicitud completa usando el constructor actualizado
         return new Solicitud(
             entity.getId(),
             entity.getDescripcion(),
+            cliente, // Pasamos el cliente aquí
             entity.getFechaCreacion(),
             Solicitud.Estado.valueOf(entity.getEstadoActual()),
             tecnico,

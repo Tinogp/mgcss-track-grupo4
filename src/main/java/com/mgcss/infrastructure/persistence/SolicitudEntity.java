@@ -12,6 +12,10 @@ public class SolicitudEntity {
     private Long id;
 
     private String descripcion;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private ClienteEntity cliente; // Usamos ClienteEntity, no el Cliente del dominio
     
     private LocalDateTime fechaCreacion;
 
@@ -44,6 +48,14 @@ public class SolicitudEntity {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public ClienteEntity getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteEntity cliente) {
+        this.cliente = cliente;
     }
 
     public LocalDateTime getFechaCreacion() {

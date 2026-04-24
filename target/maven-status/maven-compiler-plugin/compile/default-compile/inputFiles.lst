@@ -1,12 +1,18 @@
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\SolicitudRepository.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\TecnicoRepository.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Solicitud.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Tecnico.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\SolicitudEntity.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\TecnicoEntity.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SpringDataSolicitudRepository.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SpringDataTecnicoRepository.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlSolicitudRepository.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\MgcssTrackGrupo4Application.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\service\SolicitudService.java
-c:\Users\Tino\eclipse-workspace\mgcss-track-grupo4\src\main\java\com\mgcss\service\TecnicoService.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Cliente.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\ClienteRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\SolicitudRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\TecnicoRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Solicitud.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Tecnico.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\ClienteEntity.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\SolicitudEntity.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\TecnicoEntity.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SpringDataClienteRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SpringDataSolicitudRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SpringDataTecnicoRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlClienteRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlSolicitudRepository.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\MgcssTrackGrupo4Application.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\service\ClienteService.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\service\SolicitudService.java
+C:\Users\quiqu\OneDrive - UNIVERSIDAD DE HUELVA\Informatica\Curso 4\2º Cuatri\Mantenimiento\Practicas\mgcss-track-grupo4\src\main\java\com\mgcss\service\TecnicoService.java

@@ -9,20 +9,23 @@ public class Solicitud {
     };
 
     private Long id;
+    private Cliente cliente;
     private String descripcion;
     private final LocalDateTime fechaCreacion;
     private Estado estado_actual;
     private Tecnico tecnicoAsignado;
     private LocalDateTime fechaCierre;
 
-    public Solicitud() {
+    public Solicitud(Cliente cliente){
         this.fechaCreacion = LocalDateTime.now();
         this.fechaCierre = null;
         this.estado_actual = Estado.ABIERTA;
+        this.cliente = cliente;
     }
 
-    public Solicitud(Long id, String descripcion, LocalDateTime fechaCreacion, Estado estado_actual, Tecnico tecnicoAsignado, LocalDateTime fechaCierre) {
+    public Solicitud(Long id, String descripcion, Cliente cliente,LocalDateTime fechaCreacion, Estado estado_actual, Tecnico tecnicoAsignado, LocalDateTime fechaCierre) {
         this.id = id;
+        this.cliente = cliente;
         this.descripcion = descripcion;
         this.fechaCreacion = fechaCreacion;
         this.estado_actual = estado_actual;
@@ -52,6 +55,10 @@ public class Solicitud {
             return true;
         }
         return false;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public Estado getEstado_actual() {
