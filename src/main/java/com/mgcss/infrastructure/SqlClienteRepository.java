@@ -6,6 +6,8 @@ import com.mgcss.domain.repository.ClienteRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mgcss.infrastructure.persistence.ClienteEntity;
 
@@ -30,6 +32,16 @@ public class SqlClienteRepository implements ClienteRepository {
     @Override
     public Optional<Cliente> findById(Long id) {
         return jpaClienteRepo.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        jpaClienteRepo.deleteById(id);
+    }
+
+    @Override
+    public List<Cliente> findAll() {
+        return jpaClienteRepo.findAll().stream().map(this::toDomain).collect(Collectors.toList());
     }
 
     // --- MAPPERS PRIVADOS ---
