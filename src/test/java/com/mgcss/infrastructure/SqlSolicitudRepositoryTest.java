@@ -1,19 +1,18 @@
 package com.mgcss.infrastructure;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import com.mgcss.domain.Cliente;
 import com.mgcss.domain.Solicitud;
@@ -51,7 +50,7 @@ public class SqlSolicitudRepositoryTest {
         Solicitud solicitudDominio = mock(Solicitud.class);
         when(solicitudDominio.getId()).thenReturn(10L);
         when(solicitudDominio.getDescripcion()).thenReturn("Pantalla rota");
-        when(solicitudDominio.getEstado()).thenReturn(Solicitud.Estado.ABIERTA);
+        when(solicitudDominio.getEstadoActual()).thenReturn(Solicitud.Estado.ABIERTA);
         when(solicitudDominio.getCliente()).thenReturn(clienteMock);
         when(solicitudDominio.getTecnicoAsignado()).thenReturn(tecnicoMock);
 
@@ -127,7 +126,7 @@ public class SqlSolicitudRepositoryTest {
         
         assertEquals(5L, solicitud.getId());
         assertEquals("Fallo en red", solicitud.getDescripcion());
-        assertEquals(Solicitud.Estado.EN_PROCESO, solicitud.getEstado());
+        assertEquals(Solicitud.Estado.EN_PROCESO, solicitud.getEstadoActual());
         assertEquals(fechaCreacion, solicitud.getFechaCreacion());
 
         // Verificar Cliente reconstruido

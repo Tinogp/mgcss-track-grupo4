@@ -1,14 +1,13 @@
 package com.mgcss.infrastructure;
 
-import com.mgcss.domain.Cliente;
-import com.mgcss.domain.Solicitud;
-import com.mgcss.domain.repository.SolicitudRepository;
-import com.mgcss.domain.Tecnico;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
+import com.mgcss.domain.Cliente;
+import com.mgcss.domain.Solicitud;
+import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.infrastructure.persistence.ClienteEntity;
 import com.mgcss.infrastructure.persistence.SolicitudEntity;
 import com.mgcss.infrastructure.persistence.TecnicoEntity;
@@ -45,7 +44,7 @@ private SolicitudEntity toEntity(Solicitud dominio) {
         entity.setId(dominio.getId());
         entity.setDescripcion(dominio.getDescripcion());
         entity.setFechaCreacion(dominio.getFechaCreacion());
-        entity.setEstadoActual(dominio.getEstado().name());
+        entity.setEstadoActual(dominio.getEstadoActual().name());
         entity.setFechaCierre(dominio.getFechaCierre());
 
         // 1. Mapear el Técnico (como ya teníamos)

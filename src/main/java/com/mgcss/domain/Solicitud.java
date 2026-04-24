@@ -37,10 +37,6 @@ public class Solicitud {
         return id;
     }
 
-    public Estado getEstado() {
-        return estadoActual;
-    }
-
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }

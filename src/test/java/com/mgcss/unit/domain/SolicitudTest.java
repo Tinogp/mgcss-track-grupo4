@@ -8,9 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.mgcss.domain.Cliente;
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
-import com.mgcss.domain.Cliente;
 
 public class SolicitudTest {
 
@@ -70,7 +70,7 @@ public class SolicitudTest {
         boolean iniciado = solicitud.iniciarProceso();
 
         assertTrue(iniciado, "Debería poder iniciar el proceso si hay un técnico asignado");
-        assertEquals(Solicitud.Estado.EN_PROCESO, solicitud.getEstado(), "El estado debe cambiar a EN_PROCESO");
+        assertEquals(Solicitud.Estado.EN_PROCESO, solicitud.getEstadoActual(), "El estado debe cambiar a EN_PROCESO");
     }
 
     @Test
@@ -78,17 +78,17 @@ public class SolicitudTest {
         boolean iniciado = solicitud.iniciarProceso();
 
         assertFalse(iniciado, "No debería iniciar el proceso si no hay técnico asignado");
-        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstado(), "El estado debe mantenerse ABIERTA");
+        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstadoActual(), "El estado debe mantenerse ABIERTA");
     }
 
     @Test
     void testCerrar_DesdeEstadoAbierta_Falla() {
-        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstado());
+        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstadoActual());
 
         boolean cerrado = solicitud.cerrar();
 
         assertFalse(cerrado, "No debería poder cerrar una solicitud que no esté EN_PROCESO");
-        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstado(), "El estado debe seguir siendo ABIERTA");
+        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstadoActual(), "El estado debe seguir siendo ABIERTA");
         assertNull(solicitud.getFechaCierre(), "La fecha de cierre debe ser null");
     }
 
@@ -100,7 +100,7 @@ public class SolicitudTest {
         boolean cerrado = solicitud.cerrar();
 
         assertTrue(cerrado, "Debería poder cerrar la solicitud si estaba EN_PROCESO");
-        assertEquals(Solicitud.Estado.CERRADA, solicitud.getEstado(), "El estado debe cambiar a CERRADA");
+        assertEquals(Solicitud.Estado.CERRADA, solicitud.getEstadoActual(), "El estado debe cambiar a CERRADA");
         assertNotNull(solicitud.getFechaCierre(), "La fecha de cierre debe haberse registrado");
     }
 }
