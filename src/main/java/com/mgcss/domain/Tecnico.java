@@ -9,7 +9,7 @@ public class Tecnico {
         this.activo = activo;
     }
 
-    public enum Especialidad {HARDWARE, SOFTWARE, REDES};
+    public enum Especialidad {HARDWARE, SOFTWARE, REDES}
 
     private Long id;
     private String nombre;

@@ -1,14 +1,12 @@
 package com.mgcss.infrastructure;
 
-import com.mgcss.domain.Cliente;
-import com.mgcss.domain.repository.ClienteRepository;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.mgcss.domain.Cliente;
+import com.mgcss.domain.repository.ClienteRepository;
 import com.mgcss.infrastructure.persistence.ClienteEntity;
 
 @Component
@@ -41,7 +39,7 @@ public class SqlClienteRepository implements ClienteRepository {
 
     @Override
     public List<Cliente> findAll() {
-        return jpaClienteRepo.findAll().stream().map(this::toDomain).collect(Collectors.toList());
+        return jpaClienteRepo.findAll().stream().map(this::toDomain).toList();
     }
 
     // --- MAPPERS PRIVADOS ---

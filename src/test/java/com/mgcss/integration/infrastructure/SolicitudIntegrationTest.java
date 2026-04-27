@@ -12,9 +12,9 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.mgcss.domain.Cliente;
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
-import com.mgcss.domain.Cliente;
 import com.mgcss.infrastructure.SpringDataTecnicoRepository;
 import com.mgcss.infrastructure.SqlSolicitudRepository;
 import com.mgcss.infrastructure.persistence.TecnicoEntity;
@@ -46,7 +46,7 @@ public class SolicitudIntegrationTest {
         
         assertTrue(recuperada.isPresent());
         assertEquals("Fallo en el sistema de red", recuperada.get().getDescripcion());
-        assertEquals(Solicitud.Estado.ABIERTA, recuperada.get().getEstado());
+        assertEquals(Solicitud.Estado.ABIERTA, recuperada.get().getEstadoActual());
     }
 
     @Test

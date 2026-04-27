@@ -2,7 +2,7 @@ package com.mgcss.domain;
 
 public class Cliente {
 
-    public enum TipoCliente {STANDARD, PREMIUM};
+    public enum TipoCliente {STANDARD, PREMIUM}
 
     private Long id;
     private String nombre;

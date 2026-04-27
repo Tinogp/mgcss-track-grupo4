@@ -1,14 +1,14 @@
 package com.mgcss.infrastructure;
 
-import com.mgcss.domain.Cliente;
-import com.mgcss.domain.Solicitud;
-import com.mgcss.domain.repository.SolicitudRepository;
-import com.mgcss.domain.Tecnico;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
+import com.mgcss.domain.Cliente;
+import com.mgcss.domain.Solicitud;
+import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.infrastructure.persistence.ClienteEntity;
 import com.mgcss.infrastructure.persistence.SolicitudEntity;
 import com.mgcss.infrastructure.persistence.TecnicoEntity;
@@ -24,6 +24,7 @@ public class SqlSolicitudRepository implements SolicitudRepository {
 
     @Override
     public Solicitud save(Solicitud solicitud) {
+        Objects.requireNonNull(solicitud, "solicitud");
         // Mapeo: Dominio -> Entidad
         SolicitudEntity entity = toEntity(solicitud);
         SolicitudEntity saved = jpaSolicitudRepo.save(entity);
@@ -39,13 +40,13 @@ public class SqlSolicitudRepository implements SolicitudRepository {
     // --- MAPPERS PRIVADOS ---
 
 private SolicitudEntity toEntity(Solicitud dominio) {
-        if (dominio == null) return null;
+        Objects.requireNonNull(dominio, "dominio");
         
         SolicitudEntity entity = new SolicitudEntity();
         entity.setId(dominio.getId());
         entity.setDescripcion(dominio.getDescripcion());
         entity.setFechaCreacion(dominio.getFechaCreacion());
-        entity.setEstadoActual(dominio.getEstado().name());
+        entity.setEstadoActual(dominio.getEstadoActual().name());
         entity.setFechaCierre(dominio.getFechaCierre());
 
         // 1. Mapear el Técnico (como ya teníamos)
