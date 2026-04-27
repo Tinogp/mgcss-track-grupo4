@@ -96,6 +96,11 @@ public class Solicitud {
     }
 
     public boolean reabrir() {
+        if (Estado.CERRADA.equals(this.estadoActual)) {
+            this.estadoActual = Estado.ABIERTA;
+            this.fechaCierre = null;
+            return true;
+        }
         return false;
     }
 
