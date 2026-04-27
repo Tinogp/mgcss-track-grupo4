@@ -95,4 +95,8 @@ public class Solicitud {
         return false;
     }
 
+    public boolean reabrir() {
+        return false;
+    }
+
 }
