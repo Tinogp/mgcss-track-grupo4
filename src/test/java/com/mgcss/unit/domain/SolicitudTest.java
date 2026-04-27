@@ -115,4 +115,14 @@ public class SolicitudTest {
         assertTrue(reabierto, "Debería poder reabrir una solicitud que ya está CERRADA");
         assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstadoActual(), "El estado debe cambiar a ABIERTA");
     }
+
+    @Test
+    void testHistorico_ComprobarHistorico() {
+        solicitud.asignarTecnico(tecnicoActivo);
+        solicitud.iniciarProceso();
+        solicitud.cerrar();
+        solicitud.reabrir();
+
+        assertEquals(4, solicitud.getHistorico().size(), "El histórico debe registrar 4 eventos");
+    }
 }
