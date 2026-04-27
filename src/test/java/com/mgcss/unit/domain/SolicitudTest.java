@@ -103,4 +103,5 @@ public class SolicitudTest {
         assertEquals(Solicitud.Estado.CERRADA, solicitud.getEstadoActual(), "El estado debe cambiar a CERRADA");
         assertNotNull(solicitud.getFechaCierre(), "La fecha de cierre debe haberse registrado");
     }
+    // Agregar test de cambios para TDD
 }
