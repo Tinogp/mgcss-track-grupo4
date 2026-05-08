@@ -23,6 +23,7 @@ public class TecnicoEntity {
 
     // Constructor vacío obligatorio para JPA
     public TecnicoEntity() {
+        // Constructor vacío obligatorio para JPA
     }
 
     // --- Solo Getters y Setters a partir de aquí ---

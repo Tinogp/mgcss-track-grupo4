@@ -25,7 +25,7 @@ import com.mgcss.domain.Solicitud;
 import com.mgcss.infrastructure.persistence.RegisterSolicitudEntity;
 
 @ExtendWith(MockitoExtension.class)
-public class SqlRegisterSolicitudRepositoryTest {
+class SqlRegisterSolicitudRepositoryTest {
 
     @Mock
     private SpringDataRegisterSolicitudRepository jpaRepository;

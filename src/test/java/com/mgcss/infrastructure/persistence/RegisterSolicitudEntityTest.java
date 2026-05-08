@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import com.mgcss.domain.Solicitud;
 
-public class RegisterSolicitudEntityTest {
+class RegisterSolicitudEntityTest {
 
     private RegisterSolicitudEntity registerSolicitud;
 

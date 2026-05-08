@@ -23,7 +23,7 @@ import com.mgcss.domain.repository.TecnicoRepository;
 import com.mgcss.infrastructure.persistence.RegisterSolicitudEntity;
 import com.mgcss.service.SolicitudService;
 
-public class SolicitudServiceTest {
+class SolicitudServiceTest {
 
     private SolicitudRepository solicitudRepoMock;
     private TecnicoRepository tecnicoRepoMock;

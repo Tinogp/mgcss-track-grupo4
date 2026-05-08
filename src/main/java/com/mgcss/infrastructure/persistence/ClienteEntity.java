@@ -1,6 +1,10 @@
 package com.mgcss.infrastructure.persistence;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "clientes")
@@ -16,8 +20,8 @@ public class ClienteEntity {
     // Guardamos el Enum como String ("STANDARD" o "PREMIUM")
     private String tipoCliente;
 
-    // Constructor vacío obligatorio para JPA
     public ClienteEntity() {
+        // Constructor vacío obligatorio para JPA
     }
 
     // --- Getters y Setters ---
