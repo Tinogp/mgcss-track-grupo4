@@ -13,9 +13,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.mgcss.domain.Cliente;
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
-import com.mgcss.domain.Cliente;
+import com.mgcss.domain.repository.RegisterSolicitudRepository;
 import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.domain.repository.TecnicoRepository;
 import com.mgcss.service.SolicitudService;
@@ -24,6 +25,7 @@ public class SolicitudServiceTest {
 
     private SolicitudRepository solicitudRepoMock;
     private TecnicoRepository tecnicoRepoMock;
+    private RegisterSolicitudRepository registerSolicitudRepoMock;
     private SolicitudService solicitudService; // System Under Test
 
     @BeforeEach
@@ -31,9 +33,10 @@ public class SolicitudServiceTest {
         // 1. Arranque: Creamos los "actores de reparto" falsos
         solicitudRepoMock = mock(SolicitudRepository.class);
         tecnicoRepoMock = mock(TecnicoRepository.class);
+        registerSolicitudRepoMock = mock(RegisterSolicitudRepository.class);
 
         // Inyectamos los mocks en el servicio real
-        solicitudService = new SolicitudService(solicitudRepoMock, tecnicoRepoMock);
+        solicitudService = new SolicitudService(solicitudRepoMock, tecnicoRepoMock, registerSolicitudRepoMock);
     }
 
     @Test

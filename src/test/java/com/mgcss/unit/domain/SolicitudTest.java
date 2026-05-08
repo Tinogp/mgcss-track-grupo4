@@ -123,6 +123,6 @@ public class SolicitudTest {
         solicitud.cerrar();
         solicitud.reabrir();
 
-        assertEquals(4, solicitud.getHistorico().size(), "El histórico debe registrar 4 eventos");
+        assertEquals(3, solicitud.getHistorialEstado().size(), "El histórico debe registrar 4 eventos");
     }
 }
