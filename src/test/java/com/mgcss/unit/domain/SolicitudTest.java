@@ -103,4 +103,26 @@ public class SolicitudTest {
         assertEquals(Solicitud.Estado.CERRADA, solicitud.getEstadoActual(), "El estado debe cambiar a CERRADA");
         assertNotNull(solicitud.getFechaCierre(), "La fecha de cierre debe haberse registrado");
     }
+    
+    @Test
+    void testReabrir_DesdeEstadoCerrada() {
+        solicitud.asignarTecnico(tecnicoActivo);
+        solicitud.iniciarProceso();
+        solicitud.cerrar();
+
+        boolean reabierto = solicitud.reabrir();
+
+        assertTrue(reabierto, "Debería poder reabrir una solicitud que ya está CERRADA");
+        assertEquals(Solicitud.Estado.ABIERTA, solicitud.getEstadoActual(), "El estado debe cambiar a ABIERTA");
+    }
+
+    @Test
+    void testHistorico_ComprobarHistorico() {
+        solicitud.asignarTecnico(tecnicoActivo);
+        solicitud.iniciarProceso();
+        solicitud.cerrar();
+        solicitud.reabrir();
+
+        assertEquals(3, solicitud.getHistorialEstado().size(), "El histórico debe registrar 4 eventos");
+    }
 }
