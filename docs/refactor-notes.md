@@ -19,6 +19,13 @@
 - Métrica asociada: Principalmente afecta a la Complejidad Ciclomática (Cyclomatic Complexity). También mejora el Maintainability Rating.
 - Riesgo potencial si no se corrige: Código difícil de leer y comprender de un vistazo. A mayor cantidad de líneas y estructuras de control manuales, mayor es el riesgo de introducir bugs lógicos ocultos y mayor el tiempo requerido para el mantenimiento futuro.
 
+# Problema 5: corregir fallos detectados por Sonar
+- Problema identificado: Las entidades JPA y la lógica de persistencia presentaban code smells que impedían pasar el análisis de Sonar. Se detectaron imports wildcard en entidades, constructores vacíos sin explicación y falta de validación nula en el repositorio.
+- Métrica asociada: Principalmente afecta a la Mantenibilidad, Fiabilidad y al cumplimiento de las reglas de calidad de código de Sonar.
+- Riesgo potencial si no se corrige: El código conserva deuda técnica, se incrementa el riesgo de errores en el mapeo entre dominio y persistencia, y el proyecto puede fallar en auditorías de calidad estática.
+- Cambios aplicados: Reemplazo de imports wildcard por imports explícitos en entidades JPA, adición de comentarios en constructores vacíos para justificar su uso por JPA, y validación de `save(null)` con la correspondiente prueba unitaria.
+
+
 # Métricas finales
 
 - Se han eliminado 22 code smells
