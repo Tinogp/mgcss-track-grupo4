@@ -22,6 +22,9 @@ public class SqlClienteRepository implements ClienteRepository {
     public Cliente save(Cliente cliente) {
         // Mapeo: Dominio -> Entidad
         ClienteEntity entity = toEntity(cliente);
+        if (entity == null) {
+            throw new IllegalArgumentException("No se puede guardar un cliente nulo");
+        }
         ClienteEntity saved = jpaClienteRepo.save(entity);
         // Mapeo: Entidad -> Dominio
         return toDomain(saved);

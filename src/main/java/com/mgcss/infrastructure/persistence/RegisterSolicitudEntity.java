@@ -34,7 +34,8 @@ public class RegisterSolicitudEntity {
     @Column(name = "estado_actual")
     private Solicitud.Estado estadoActual;
 
-    public RegisterSolicitudEntity() {
+    public RegisterSolicitudEntity(){
+        // Constructor vacío obligatorio para JPA
     }
 
     public RegisterSolicitudEntity(Long solicitudId, Solicitud.Estado estadoAnterior, Solicitud.Estado estadoActual) {
