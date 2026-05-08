@@ -32,3 +32,13 @@ Entidades JPA: extender SolicitudEntity.java añadiendo una relación para mapea
 Mappers: actualizar la lógica para mapear bidireccionalmente el nuevo histórico entre el modelo de Dominio (Solicitud) y el modelo de Persistencia (SolicitudEntity).
 
 Base de datos: crear una nueva tabla en la base de datos para almacenar la relación 1:N entre la solicitud y sus estados histórico
+
+# 6. Justificación diseño de histórico
+
+Se ha decidido aislar el histórico de estados en una entidad independiente en lugar de incrustarlo en la entidad principal (SolicitudEntity). Esta decisión se basa en:
+
+1. Principio de Responsabilidad Única: Mantenemos SolicitudEntity enfocada únicamente en los datos actuales de la petición, delegando la auditoría y trazabilidad a RegisterSolicitudEntity.
+
+2. Rendimiento y Escalabilidad: Al utilizar una tabla separada, evitamos cargar en memoria todo el histórico acumulado durante las operaciones normales de consulta de la Solicitud. El historial solo se consulta cuando es explícitamente necesario.
+
+3. Mantenibilidad: Tratamos el histórico como datos inmutables. Separarlo previene el crecimiento descontrolado de SolicitudEntity, evitando introducir nuevos Code Smells por exceso de atributos o complejidad.
