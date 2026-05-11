@@ -1,9 +1,7 @@
-com\mgcss\api\dto\ClienteRequestDTO.class
 com\mgcss\infrastructure\web\mapper\SolicitudMapper.class
 com\mgcss\infrastructure\persistence\RegisterSolicitudEntity.class
 com\mgcss\infrastructure\web\controller\SolicitudController.class
 com\mgcss\infrastructure\SpringDataRegisterSolicitudRepository.class
-com\mgcss\api\dto\ClienteResponseDTO.class
 com\mgcss\infrastructure\web\dto\SolicitudRequestDTO.class
 com\mgcss\MgcssTrackGrupo4Application.class
 com\mgcss\infrastructure\config\ServiceConfig.class
@@ -20,7 +18,6 @@ com\mgcss\domain\Tecnico.class
 com\mgcss\infrastructure\persistence\SolicitudEntity.class
 com\mgcss\infrastructure\persistence\TecnicoEntity.class
 com\mgcss\domain\Cliente$TipoCliente.class
-com\mgcss\api\ClienteController.class
 com\mgcss\domain\Solicitud$Estado.class
 com\mgcss\infrastructure\web\dto\SolicitudResponseDTO.class
 com\mgcss\service\SolicitudService.class
