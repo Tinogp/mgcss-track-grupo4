@@ -1,3 +1,6 @@
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\api\ClienteController.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\api\dto\ClienteRequestDTO.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\api\dto\ClienteResponseDTO.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Cliente.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\ClienteRepository.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\RegisterSolicitudRepository.java
@@ -5,6 +8,7 @@ C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Pra
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\domain\repository\TecnicoRepository.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Solicitud.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\domain\Tecnico.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\config\ServiceConfig.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\ClienteEntity.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\RegisterSolicitudEntity.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\persistence\SolicitudEntity.java
@@ -16,6 +20,12 @@ C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Pra
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlClienteRepository.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlRegisterSolicitudRepository.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlSolicitudRepository.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\SqlTecnicoRepository.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\web\controller\SolicitudController.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\web\dto\AsignarTecnicoDTO.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\web\dto\SolicitudRequestDTO.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\web\dto\SolicitudResponseDTO.java
+C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\infrastructure\web\mapper\SolicitudMapper.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\MgcssTrackGrupo4Application.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\service\ClienteService.java
 C:\Users\lanid\OneDrive\.Documentos\.Universidad\Cuarto\2_Cuatrimestre\MGCSS\Practicas\Programa\mgcss-track-grupo4\src\main\java\com\mgcss\service\SolicitudService.java

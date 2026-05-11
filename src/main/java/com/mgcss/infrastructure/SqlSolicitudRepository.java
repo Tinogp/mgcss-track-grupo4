@@ -1,5 +1,6 @@
 package com.mgcss.infrastructure;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -35,6 +36,13 @@ public class SqlSolicitudRepository implements SolicitudRepository {
     @Override
     public Optional<Solicitud> findById(Long id) {
         return jpaSolicitudRepo.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public List<Solicitud> findAll() {
+        return jpaSolicitudRepo.findAll().stream()
+                .map(this::toDomain)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     // --- MAPPERS PRIVADOS ---

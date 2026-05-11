@@ -2,9 +2,11 @@ package com.mgcss.service;
 
 import com.mgcss.domain.Cliente;
 import com.mgcss.domain.repository.ClienteRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
@@ -16,6 +18,19 @@ public class ClienteService {
 
     public Cliente createCliente(Cliente cliente) {
         return clienteRepository.save(cliente);
+    }
+
+    /**
+     * Crear un nuevo cliente con los datos proporcionados.
+     *
+     * @param nombre Nombre del cliente
+     * @param email Email del cliente
+     * @param tipoCliente Tipo de cliente (STANDARD o PREMIUM)
+     * @return Cliente creado y persistido
+     */
+    public Cliente crearCliente(String nombre, String email, Cliente.TipoCliente tipoCliente) {
+        Cliente nuevoCliente = new Cliente(nombre, email, tipoCliente);
+        return clienteRepository.save(nuevoCliente);
     }
 
     public boolean deleteCliente(Long id) {
