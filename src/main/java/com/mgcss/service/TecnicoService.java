@@ -1,8 +1,9 @@
 package com.mgcss.service;
 
+import java.util.Optional;
+
 import com.mgcss.domain.Tecnico;
 import com.mgcss.domain.repository.TecnicoRepository;
-import java.util.Optional;
 
 public class TecnicoService {
 
@@ -26,5 +27,9 @@ public class TecnicoService {
         }
 
         return false;
+    }
+
+    public Tecnico crearTecnico(Tecnico tecnico) {
+        return tecnicoRepository.save(tecnico);
     }
 }

@@ -17,6 +17,7 @@ import static org.mockito.Mockito.when;
 import com.mgcss.domain.Cliente;
 import com.mgcss.domain.Solicitud;
 import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.repository.ClienteRepository;
 import com.mgcss.domain.repository.RegisterSolicitudRepository;
 import com.mgcss.domain.repository.SolicitudRepository;
 import com.mgcss.domain.repository.TecnicoRepository;
@@ -28,6 +29,7 @@ class SolicitudServiceTest {
     private SolicitudRepository solicitudRepoMock;
     private TecnicoRepository tecnicoRepoMock;
     private RegisterSolicitudRepository registerSolicitudRepoMock;
+    private ClienteRepository clienteRepoMock;
     private SolicitudService solicitudService; // System Under Test
 
     @BeforeEach
@@ -36,9 +38,10 @@ class SolicitudServiceTest {
         solicitudRepoMock = mock(SolicitudRepository.class);
         tecnicoRepoMock = mock(TecnicoRepository.class);
         registerSolicitudRepoMock = mock(RegisterSolicitudRepository.class);
+        clienteRepoMock = mock(ClienteRepository.class);
 
         // Inyectamos los mocks en el servicio real
-        solicitudService = new SolicitudService(solicitudRepoMock, tecnicoRepoMock, registerSolicitudRepoMock);
+        solicitudService = new SolicitudService(solicitudRepoMock, tecnicoRepoMock, registerSolicitudRepoMock, clienteRepoMock);
     }
 
     // ========== TESTS PARA asignarTecnico() ==========
