@@ -1,10 +1,11 @@
 package com.mgcss.service;
 
-import com.mgcss.domain.Cliente;
-import com.mgcss.domain.repository.ClienteRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.mgcss.domain.Cliente;
+import com.mgcss.domain.repository.ClienteRepository;
 
 @Service
 public class ClienteService {
