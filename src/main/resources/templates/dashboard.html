@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="night" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MGCSS Track</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script th:src="@{/js/theme-toggle.js}" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <a class="brand" th:href="@{/ui}">
+            <span class="brand-mark">M</span>
+            <span>MGCSS Track</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navegacion principal">
+            <a href="#solicitudes">Solicitudes</a>
+            <a href="#clientes">Clientes</a>
+            <a href="#lista-tecnicos">Tecnicos</a>
+            <a href="/swagger-ui.html">API</a>
+        </nav>
+
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Cambiar tema">
+            <span class="theme-toggle__icon" aria-hidden="true"></span>
+            <span data-theme-label>Noche</span>
+        </button>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Panel de mantenimiento</p>
+                <h1>Controla cada solicitud con una vista clara y rápida.</h1>
+                <div class="hero-actions">
+                    <a class="primary-action" href="#nueva-solicitud">Nueva solicitud</a>
+                    <a class="secondary-action" href="#nuevo-cliente">Nuevo cliente</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-grid" aria-label="Resumen">
+            <article class="stat-card">
+                <span class="stat-label">Clientes</span>
+                <strong th:text="${totalClientes}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Solicitudes</span>
+                <strong th:text="${totalSolicitudes}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Abiertas</span>
+                <strong th:text="${solicitudesAbiertas}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">En proceso</span>
+                <strong th:text="${solicitudesEnProceso}">0</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Tecnicos activos</span>
+                <strong th:text="${tecnicosActivos}">0</strong>
+            </article>
+        </section>
+
+        <div class="feedback feedback--ok" th:if="${mensaje}" th:text="${mensaje}"></div>
+        <div class="feedback feedback--error" th:if="${error}" th:text="${error}"></div>
+
+        <section class="panel lookup-panel" id="detalle-solicitud">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Consulta</p>
+                    <h2>Buscar solicitud por ID</h2>
+                </div>
+                <span class="count-pill">GET /api/solicitudes/{id}</span>
+            </div>
+
+            <form class="lookup-form" th:action="@{/ui}" method="get">
+                <label>
+                    ID de solicitud
+                    <input name="solicitudId" type="number" min="1" placeholder="Ej. 1" th:value="${solicitudConsultadaId}">
+                </label>
+                <button class="submit-button" type="submit">Consultar</button>
+            </form>
+
+            <article class="detail-card" th:if="${solicitudConsultada != null}">
+                <div>
+                    <span class="status"
+                          th:classappend="${solicitudConsultada.estadoActual.name() == 'ABIERTA'} ? ' status--open' : (${solicitudConsultada.estadoActual.name() == 'EN_PROCESO'} ? ' status--progress' : ' status--closed')"
+                          th:text="${solicitudConsultada.estadoActual}">ABIERTA</span>
+                    <h3 th:text="${solicitudConsultada.descripcion}">Solicitud</h3>
+                    <p>
+                        Cliente:
+                        <strong th:text="${solicitudConsultada.cliente != null ? solicitudConsultada.cliente.nombre : 'Sin cliente'}">Cliente</strong>
+                    </p>
+                    <p>
+                        Tecnico:
+                        <strong th:text="${solicitudConsultada.tecnicoAsignado != null ? solicitudConsultada.tecnicoAsignado.nombre : 'Sin asignar'}">Tecnico</strong>
+                    </p>
+                </div>
+            </article>
+
+            <div class="empty-state empty-state--compact" th:if="${solicitudConsultada == null and solicitudConsultadaId != null}">
+                No existe una solicitud con ese ID.
+            </div>
+        </section>
+
+        <section class="content-layout">
+            <div class="panel panel--wide" id="solicitudes">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Actividad</p>
+                        <h2>Solicitudes recientes</h2>
+                    </div>
+                    <span class="count-pill" th:text="${solicitudesCerradas + ' cerradas'}">0 cerradas</span>
+                </div>
+
+                <div class="empty-state" th:if="${#lists.isEmpty(solicitudes)}">
+                    Todavia no hay solicitudes registradas.
+                </div>
+
+                <div class="request-list" th:if="${!#lists.isEmpty(solicitudes)}">
+                    <article class="request-item" th:each="solicitud : ${solicitudes}">
+                        <div class="request-main">
+                            <span class="status"
+                                  th:classappend="${solicitud.estadoActual.name() == 'ABIERTA'} ? ' status--open' : (${solicitud.estadoActual.name() == 'EN_PROCESO'} ? ' status--progress' : ' status--closed')"
+                                  th:text="${solicitud.estadoActual}">ABIERTA</span>
+                            <h3 th:text="${solicitud.descripcion}">Revision de equipo</h3>
+                            <p>
+                                <span th:text="${solicitud.cliente != null ? solicitud.cliente.nombre : 'Sin cliente'}">Cliente</span>
+                                <span class="dot-separator"></span>
+                                <span th:text="${solicitud.tecnicoAsignado != null ? solicitud.tecnicoAsignado.nombre : 'Sin tecnico'}">Tecnico</span>
+                                <span class="dot-separator"></span>
+                                <span th:text="${solicitud.fechaCreacion}">Fecha</span>
+                            </p>
+                        </div>
+                        <div class="request-actions">
+                            <a th:href="@{/ui(solicitudId=${solicitud.id})} + '#detalle-solicitud'">Ver</a>
+                            <form th:if="${solicitud.estadoActual.name() != 'CERRADA' and !#lists.isEmpty(tecnicosActivosLista)}"
+                                  th:action="@{/ui/solicitudes/{id}/asignar(id=${solicitud.id})}"
+                                  method="post">
+                                <select name="tecnicoId" aria-label="Tecnico para asignar" required>
+                                    <option value="" disabled selected>Asignar tecnico</option>
+                                    <option th:each="tecnico : ${tecnicosActivosLista}"
+                                            th:value="${tecnico.id}"
+                                            th:text="${tecnico.nombre + ' - ' + tecnico.especialidad}">Tecnico</option>
+                                </select>
+                                <button type="submit">Asignar</button>
+                            </form>
+                            <form th:if="${solicitud.estadoActual.name() == 'ABIERTA'}" th:action="@{/ui/solicitudes/{id}/iniciar(id=${solicitud.id})}" method="post">
+                                <button type="submit">Iniciar</button>
+                            </form>
+                            <form th:if="${solicitud.estadoActual.name() == 'EN_PROCESO'}" th:action="@{/ui/solicitudes/{id}/cerrar(id=${solicitud.id})}" method="post">
+                                <button type="submit">Cerrar</button>
+                            </form>
+                            <form th:if="${solicitud.estadoActual.name() == 'CERRADA'}" th:action="@{/ui/solicitudes/{id}/reabrir(id=${solicitud.id})}" method="post">
+                                <button type="submit">Reabrir</button>
+                            </form>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <aside class="forms-stack">
+                <section class="panel" id="nueva-solicitud">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">Alta rapida</p>
+                            <h2>Nueva solicitud</h2>
+                        </div>
+                    </div>
+                    <form class="form-grid" th:action="@{/ui/solicitudes}" method="post">
+                        <label>
+                            Descripcion
+                            <textarea name="descripcion" rows="4" placeholder="Describe la incidencia" required></textarea>
+                        </label>
+                        <label>
+                            Cliente
+                            <select name="clienteId" required>
+                                <option value="" disabled selected>Selecciona un cliente</option>
+                                <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}">Cliente</option>
+                            </select>
+                        </label>
+                        <button class="submit-button" type="submit" th:disabled="${#lists.isEmpty(clientes)}">Registrar</button>
+                    </form>
+                </section>
+
+                <section class="panel" id="nuevo-cliente">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">CRM</p>
+                            <h2>Nuevo cliente</h2>
+                        </div>
+                    </div>
+                    <form class="form-grid" th:action="@{/ui/clientes}" method="post">
+                        <label>
+                            Nombre
+                            <input name="nombre" type="text" placeholder="Nombre completo" required>
+                        </label>
+                        <label>
+                            Email
+                            <input name="email" type="email" placeholder="cliente@correo.com" required>
+                        </label>
+                        <label>
+                            Tipo
+                            <select name="tipoCliente" required>
+                                <option th:each="tipo : ${tiposCliente}" th:value="${tipo}" th:text="${tipo}">STANDARD</option>
+                            </select>
+                        </label>
+                        <button class="submit-button" type="submit">Guardar cliente</button>
+                    </form>
+                </section>
+
+                <section class="panel" id="tecnicos">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">Equipo</p>
+                            <h2>Tecnicos</h2>
+                        </div>
+                        <span class="count-pill" th:text="${totalTecnicos + ' total'}">0 total</span>
+                    </div>
+
+                    <form class="form-grid" th:action="@{/ui/tecnicos}" method="post">
+                        <label>
+                            Nombre
+                            <input name="nombre" type="text" placeholder="Nombre del tecnico" required>
+                        </label>
+                        <label>
+                            Especialidad
+                            <select name="especialidad" required>
+                                <option th:each="especialidad : ${especialidades}" th:value="${especialidad}" th:text="${especialidad}">SOFTWARE</option>
+                            </select>
+                        </label>
+                        <button class="submit-button" type="submit">Guardar tecnico</button>
+                    </form>
+
+                    <div class="technician-list" th:if="${!#lists.isEmpty(tecnicos)}">
+                        <article class="technician-item" th:each="tecnico : ${tecnicos}">
+                            <div>
+                                <strong th:text="${tecnico.nombre}">Tecnico</strong>
+                                <span th:text="${tecnico.especialidad}">SOFTWARE</span>
+                            </div>
+                            <form th:if="${!tecnico.activo}" th:action="@{/ui/tecnicos/{id}/activar(id=${tecnico.id})}" method="post">
+                                <button type="submit">Activar</button>
+                            </form>
+                            <span class="status status--closed" th:if="${tecnico.activo}">ACTIVO</span>
+                        </article>
+                    </div>
+                </section>
+            </aside>
+        </section>
+
+        <section class="directory-layout" aria-label="Listados">
+            <section class="panel" id="clientes">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Directorio</p>
+                        <h2>Clientes registrados</h2>
+                    </div>
+                    <span class="count-pill" th:text="${totalClientes + ' total'}">0 total</span>
+                </div>
+
+                <div class="empty-state empty-state--compact" th:if="${#lists.isEmpty(clientes)}">
+                    Todavia no hay clientes registrados.
+                </div>
+
+                <div class="directory-list" th:if="${!#lists.isEmpty(clientes)}">
+                    <article class="directory-item" th:each="cliente : ${clientes}">
+                        <div>
+                            <strong th:text="${cliente.nombre}">Cliente</strong>
+                            <span th:text="${cliente.email}">cliente@correo.com</span>
+                        </div>
+                        <span class="status status--open" th:text="${cliente.tipoCliente}">STANDARD</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel" id="lista-tecnicos">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Directorio</p>
+                        <h2>Tecnicos registrados</h2>
+                    </div>
+                    <span class="count-pill" th:text="${totalTecnicos + ' total'}">0 total</span>
+                </div>
+
+                <div class="empty-state empty-state--compact" th:if="${#lists.isEmpty(tecnicos)}">
+                    Todavia no hay tecnicos registrados.
+                </div>
+
+                <div class="directory-list" th:if="${!#lists.isEmpty(tecnicos)}">
+                    <article class="directory-item" th:each="tecnico : ${tecnicos}">
+                        <div>
+                            <strong th:text="${tecnico.nombre}">Tecnico</strong>
+                            <span th:text="${tecnico.especialidad}">SOFTWARE</span>
+                        </div>
+                        <form th:if="${!tecnico.activo}" th:action="@{/ui/tecnicos/{id}/activar(id=${tecnico.id})}" method="post">
+                            <button type="submit">Activar</button>
+                        </form>
+                        <span class="status status--closed" th:if="${tecnico.activo}">ACTIVO</span>
+                    </article>
+                </div>
+            </section>
+        </section>
+    </main>
+</body>
+</html>

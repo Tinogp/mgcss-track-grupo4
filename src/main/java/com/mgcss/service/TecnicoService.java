@@ -1,5 +1,6 @@
 package com.mgcss.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.mgcss.domain.Tecnico;
@@ -31,5 +32,9 @@ public class TecnicoService {
 
     public Tecnico crearTecnico(Tecnico tecnico) {
         return tecnicoRepository.save(tecnico);
+    }
+
+    public List<Tecnico> listarTecnicos() {
+        return tecnicoRepository.findAll();
     }
 }

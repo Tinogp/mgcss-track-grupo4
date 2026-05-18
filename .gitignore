@@ -26,3 +26,6 @@ replay_pid*
 
 # Ignore target directory
 target/
+
+# Maven wrapper/cache used by local runs
+.maven-cache/
