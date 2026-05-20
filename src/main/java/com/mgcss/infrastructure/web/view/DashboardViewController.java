@@ -21,6 +21,10 @@ import com.mgcss.service.TecnicoService;
 @Controller
 public class DashboardViewController {
 
+    private static final String MESSAGE_ATTRIBUTE = "mensaje";
+    private static final String ERROR_ATTRIBUTE = "error";
+    private static final String SOLICITUDES_REDIRECT = "redirect:/ui#solicitudes";
+
     private final ClienteService clienteService;
     private final SolicitudService solicitudService;
     private final TecnicoService tecnicoService;
@@ -82,7 +86,7 @@ public class DashboardViewController {
                                @RequestParam Cliente.TipoCliente tipoCliente,
                                RedirectAttributes redirectAttributes) {
         clienteService.crearCliente(nombre, email, tipoCliente);
-        redirectAttributes.addFlashAttribute("mensaje", "Cliente creado correctamente.");
+        redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, "Cliente creado correctamente.");
         return "redirect:/ui";
     }
 
@@ -92,9 +96,9 @@ public class DashboardViewController {
                                  RedirectAttributes redirectAttributes) {
         try {
             solicitudService.crearSolicitud(descripcion, clienteId);
-            redirectAttributes.addFlashAttribute("mensaje", "Solicitud registrada correctamente.");
+            redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, "Solicitud registrada correctamente.");
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());
         }
         return "redirect:/ui";
     }
@@ -104,14 +108,14 @@ public class DashboardViewController {
                                @RequestParam Tecnico.Especialidad especialidad,
                                RedirectAttributes redirectAttributes) {
         tecnicoService.crearTecnico(new Tecnico(nombre, especialidad));
-        redirectAttributes.addFlashAttribute("mensaje", "Tecnico creado correctamente.");
+        redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, "Tecnico creado correctamente.");
         return "redirect:/ui";
     }
 
     @PostMapping("/ui/tecnicos/{id}/activar")
     public String activarTecnico(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         boolean activado = tecnicoService.activarTecnico(id);
-        redirectAttributes.addFlashAttribute(activado ? "mensaje" : "error",
+        redirectAttributes.addFlashAttribute(activado ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,
                 activado ? "Tecnico activado." : "No se pudo activar el tecnico.");
         return "redirect:/ui";
     }
@@ -122,47 +126,47 @@ public class DashboardViewController {
                                  RedirectAttributes redirectAttributes) {
         try {
             boolean asignada = solicitudService.asignarTecnico(id, tecnicoId);
-            redirectAttributes.addFlashAttribute(asignada ? "mensaje" : "error",
+            redirectAttributes.addFlashAttribute(asignada ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,
                     asignada ? "Tecnico asignado a la solicitud." : "No se pudo asignar el tecnico.");
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());
         }
-        return "redirect:/ui#solicitudes";
+        return SOLICITUDES_REDIRECT;
     }
 
     @PostMapping("/ui/solicitudes/{id}/iniciar")
     public String iniciarProceso(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             boolean iniciada = solicitudService.iniciarProceso(id);
-            redirectAttributes.addFlashAttribute(iniciada ? "mensaje" : "error",
+            redirectAttributes.addFlashAttribute(iniciada ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,
                     iniciada ? "Solicitud puesta en proceso." : "La solicitud necesita un tecnico asignado para iniciarse.");
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());
         }
-        return "redirect:/ui#solicitudes";
+        return SOLICITUDES_REDIRECT;
     }
 
     @PostMapping("/ui/solicitudes/{id}/cerrar")
     public String cerrarSolicitud(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             boolean cerrada = solicitudService.cerrarSolicitud(id);
-            redirectAttributes.addFlashAttribute(cerrada ? "mensaje" : "error",
+            redirectAttributes.addFlashAttribute(cerrada ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,
                     cerrada ? "Solicitud cerrada." : "La solicitud no se puede cerrar en su estado actual.");
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());
         }
-        return "redirect:/ui#solicitudes";
+        return SOLICITUDES_REDIRECT;
     }
 
     @PostMapping("/ui/solicitudes/{id}/reabrir")
     public String reabrirSolicitud(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             boolean reabierta = solicitudService.reabrirSolicitud(id);
-            redirectAttributes.addFlashAttribute(reabierta ? "mensaje" : "error",
+            redirectAttributes.addFlashAttribute(reabierta ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,
                     reabierta ? "Solicitud reabierta." : "La solicitud no se puede reabrir en su estado actual.");
         } catch (IllegalArgumentException ex) {
-            redirectAttributes.addFlashAttribute("error", ex.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());
         }
-        return "redirect:/ui#solicitudes";
+        return SOLICITUDES_REDIRECT;
     }
 }

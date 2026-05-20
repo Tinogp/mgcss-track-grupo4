@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +25,10 @@ import com.mgcss.service.SolicitudService;
 import com.mgcss.service.TecnicoService;
 
 class DashboardViewControllerTest {
+
+    private static final String MESSAGE_ATTRIBUTE = "mensaje";
+    private static final String ERROR_ATTRIBUTE = "error";
+    private static final String SOLICITUDES_REDIRECT = "redirect:/ui#solicitudes";
 
     private ClienteService clienteService;
     private SolicitudService solicitudService;
@@ -57,21 +62,22 @@ class DashboardViewControllerTest {
         String view = controller.dashboard(2L, model);
 
         assertThat(view).isEqualTo("dashboard");
-        assertThat(model.get("clientes")).isEqualTo(List.of(cliente));
-        assertThat(model.get("solicitudes")).isEqualTo(List.of(abierta, enProceso, cerrada));
-        assertThat(model.get("tecnicos")).isEqualTo(List.of(activo, inactivo));
-        assertThat(model.get("tecnicosActivosLista")).isEqualTo(List.of(activo));
-        assertThat(model.get("solicitudConsultada")).isEqualTo(enProceso);
-        assertThat(model.get("solicitudConsultadaId")).isEqualTo(2L);
-        assertThat(model.get("totalClientes")).isEqualTo(1);
-        assertThat(model.get("totalSolicitudes")).isEqualTo(3);
-        assertThat(model.get("totalTecnicos")).isEqualTo(2);
-        assertThat(model.get("tecnicosActivos")).isEqualTo(1L);
-        assertThat(model.get("solicitudesAbiertas")).isEqualTo(1L);
-        assertThat(model.get("solicitudesEnProceso")).isEqualTo(1L);
-        assertThat(model.get("solicitudesCerradas")).isEqualTo(1L);
-        assertThat(model.get("tiposCliente")).isEqualTo(Cliente.TipoCliente.values());
-        assertThat(model.get("especialidades")).isEqualTo(Tecnico.Especialidad.values());
+        assertThat(model)
+                .containsEntry("clientes", List.of(cliente))
+                .containsEntry("solicitudes", List.of(abierta, enProceso, cerrada))
+                .containsEntry("tecnicos", List.of(activo, inactivo))
+                .containsEntry("tecnicosActivosLista", List.of(activo))
+                .containsEntry("solicitudConsultada", enProceso)
+                .containsEntry("solicitudConsultadaId", 2L)
+                .containsEntry("totalClientes", 1)
+                .containsEntry("totalSolicitudes", 3)
+                .containsEntry("totalTecnicos", 2)
+                .containsEntry("tecnicosActivos", 1L)
+                .containsEntry("solicitudesAbiertas", 1L)
+                .containsEntry("solicitudesEnProceso", 1L)
+                .containsEntry("solicitudesCerradas", 1L);
+        assertThat((Cliente.TipoCliente[]) model.get("tiposCliente")).containsExactly(Cliente.TipoCliente.values());
+        assertThat((Tecnico.Especialidad[]) model.get("especialidades")).containsExactly(Tecnico.Especialidad.values());
     }
 
     @Test
@@ -85,8 +91,9 @@ class DashboardViewControllerTest {
         String view = controller.dashboard(null, model);
 
         assertThat(view).isEqualTo("dashboard");
-        assertThat(model.get("solicitudConsultada")).isNull();
-        assertThat(model.get("solicitudConsultadaId")).isNull();
+        assertThat(model)
+                .containsEntry("solicitudConsultada", null)
+                .containsEntry("solicitudConsultadaId", null);
     }
 
     @Test
@@ -97,7 +104,7 @@ class DashboardViewControllerTest {
 
         assertThat(result).isEqualTo("redirect:/ui");
         verify(clienteService).crearCliente("ACME", "acme@test.com", Cliente.TipoCliente.STANDARD);
-        assertFlash(redirect, "mensaje", "Cliente creado correctamente.");
+        assertFlash(redirect, MESSAGE_ATTRIBUTE, "Cliente creado correctamente.");
     }
 
     @Test
@@ -107,7 +114,7 @@ class DashboardViewControllerTest {
 
         assertThat(ok).isEqualTo("redirect:/ui");
         verify(solicitudService).crearSolicitud("Incidencia", 1L);
-        assertFlash(okRedirect, "mensaje", "Solicitud registrada correctamente.");
+        assertFlash(okRedirect, MESSAGE_ATTRIBUTE, "Solicitud registrada correctamente.");
 
         when(solicitudService.crearSolicitud("Mala", 99L)).thenThrow(new IllegalArgumentException("Cliente inexistente"));
         RedirectAttributesModelMap errorRedirect = new RedirectAttributesModelMap();
@@ -115,7 +122,7 @@ class DashboardViewControllerTest {
         String error = controller.crearSolicitud("Mala", 99L, errorRedirect);
 
         assertThat(error).isEqualTo("redirect:/ui");
-        assertFlash(errorRedirect, "error", "Cliente inexistente");
+        assertFlash(errorRedirect, ERROR_ATTRIBUTE, "Cliente inexistente");
     }
 
     @Test
@@ -126,7 +133,7 @@ class DashboardViewControllerTest {
 
         assertThat(create).isEqualTo("redirect:/ui");
         verify(tecnicoService).crearTecnico(any(Tecnico.class));
-        assertFlash(createRedirect, "mensaje", "Tecnico creado correctamente.");
+        assertFlash(createRedirect, MESSAGE_ATTRIBUTE, "Tecnico creado correctamente.");
 
         when(tecnicoService.activarTecnico(1L)).thenReturn(true);
         RedirectAttributesModelMap activeRedirect = new RedirectAttributesModelMap();
@@ -134,7 +141,7 @@ class DashboardViewControllerTest {
         String active = controller.activarTecnico(1L, activeRedirect);
 
         assertThat(active).isEqualTo("redirect:/ui");
-        assertFlash(activeRedirect, "mensaje", "Tecnico activado.");
+        assertFlash(activeRedirect, MESSAGE_ATTRIBUTE, "Tecnico activado.");
 
         when(tecnicoService.activarTecnico(2L)).thenReturn(false);
         RedirectAttributesModelMap errorRedirect = new RedirectAttributesModelMap();
@@ -142,7 +149,7 @@ class DashboardViewControllerTest {
         String error = controller.activarTecnico(2L, errorRedirect);
 
         assertThat(error).isEqualTo("redirect:/ui");
-        assertFlash(errorRedirect, "error", "No se pudo activar el tecnico.");
+        assertFlash(errorRedirect, ERROR_ATTRIBUTE, "No se pudo activar el tecnico.");
     }
 
     @Test
@@ -152,24 +159,24 @@ class DashboardViewControllerTest {
 
         String ok = controller.asignarTecnico(1L, 10L, okRedirect);
 
-        assertThat(ok).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(okRedirect, "mensaje", "Tecnico asignado a la solicitud.");
+        assertThat(ok).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(okRedirect, MESSAGE_ATTRIBUTE, "Tecnico asignado a la solicitud.");
 
         when(solicitudService.asignarTecnico(2L, 10L)).thenReturn(false);
         RedirectAttributesModelMap failRedirect = new RedirectAttributesModelMap();
 
         String fail = controller.asignarTecnico(2L, 10L, failRedirect);
 
-        assertThat(fail).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(failRedirect, "error", "No se pudo asignar el tecnico.");
+        assertThat(fail).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(failRedirect, ERROR_ATTRIBUTE, "No se pudo asignar el tecnico.");
 
         when(solicitudService.asignarTecnico(3L, 10L)).thenThrow(new IllegalArgumentException("Solicitud inexistente"));
         RedirectAttributesModelMap errorRedirect = new RedirectAttributesModelMap();
 
         String error = controller.asignarTecnico(3L, 10L, errorRedirect);
 
-        assertThat(error).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(errorRedirect, "error", "Solicitud inexistente");
+        assertThat(error).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(errorRedirect, ERROR_ATTRIBUTE, "Solicitud inexistente");
     }
 
     @Test
@@ -179,24 +186,24 @@ class DashboardViewControllerTest {
 
         String ok = controller.iniciarProceso(1L, okRedirect);
 
-        assertThat(ok).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(okRedirect, "mensaje", "Solicitud puesta en proceso.");
+        assertThat(ok).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(okRedirect, MESSAGE_ATTRIBUTE, "Solicitud puesta en proceso.");
 
         when(solicitudService.iniciarProceso(2L)).thenReturn(false);
         RedirectAttributesModelMap failRedirect = new RedirectAttributesModelMap();
 
         String fail = controller.iniciarProceso(2L, failRedirect);
 
-        assertThat(fail).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(failRedirect, "error", "La solicitud necesita un tecnico asignado para iniciarse.");
+        assertThat(fail).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(failRedirect, ERROR_ATTRIBUTE, "La solicitud necesita un tecnico asignado para iniciarse.");
 
         when(solicitudService.iniciarProceso(3L)).thenThrow(new IllegalArgumentException("Solicitud inexistente"));
         RedirectAttributesModelMap errorRedirect = new RedirectAttributesModelMap();
 
         String error = controller.iniciarProceso(3L, errorRedirect);
 
-        assertThat(error).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(errorRedirect, "error", "Solicitud inexistente");
+        assertThat(error).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(errorRedirect, ERROR_ATTRIBUTE, "Solicitud inexistente");
     }
 
     @Test
@@ -206,24 +213,24 @@ class DashboardViewControllerTest {
 
         String ok = controller.cerrarSolicitud(1L, okRedirect);
 
-        assertThat(ok).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(okRedirect, "mensaje", "Solicitud cerrada.");
+        assertThat(ok).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(okRedirect, MESSAGE_ATTRIBUTE, "Solicitud cerrada.");
 
         when(solicitudService.cerrarSolicitud(2L)).thenReturn(false);
         RedirectAttributesModelMap failRedirect = new RedirectAttributesModelMap();
 
         String fail = controller.cerrarSolicitud(2L, failRedirect);
 
-        assertThat(fail).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(failRedirect, "error", "La solicitud no se puede cerrar en su estado actual.");
+        assertThat(fail).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(failRedirect, ERROR_ATTRIBUTE, "La solicitud no se puede cerrar en su estado actual.");
 
         when(solicitudService.cerrarSolicitud(3L)).thenThrow(new IllegalArgumentException("Solicitud inexistente"));
         RedirectAttributesModelMap errorRedirect = new RedirectAttributesModelMap();
 
         String error = controller.cerrarSolicitud(3L, errorRedirect);
 
-        assertThat(error).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(errorRedirect, "error", "Solicitud inexistente");
+        assertThat(error).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(errorRedirect, ERROR_ATTRIBUTE, "Solicitud inexistente");
     }
 
     @Test
@@ -233,28 +240,29 @@ class DashboardViewControllerTest {
 
         String ok = controller.reabrirSolicitud(1L, okRedirect);
 
-        assertThat(ok).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(okRedirect, "mensaje", "Solicitud reabierta.");
+        assertThat(ok).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(okRedirect, MESSAGE_ATTRIBUTE, "Solicitud reabierta.");
 
         when(solicitudService.reabrirSolicitud(2L)).thenReturn(false);
         RedirectAttributesModelMap failRedirect = new RedirectAttributesModelMap();
 
         String fail = controller.reabrirSolicitud(2L, failRedirect);
 
-        assertThat(fail).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(failRedirect, "error", "La solicitud no se puede reabrir en su estado actual.");
+        assertThat(fail).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(failRedirect, ERROR_ATTRIBUTE, "La solicitud no se puede reabrir en su estado actual.");
 
         when(solicitudService.reabrirSolicitud(3L)).thenThrow(new IllegalArgumentException("Solicitud inexistente"));
         RedirectAttributesModelMap errorRedirect = new RedirectAttributesModelMap();
 
         String error = controller.reabrirSolicitud(3L, errorRedirect);
 
-        assertThat(error).isEqualTo("redirect:/ui#solicitudes");
-        assertFlash(errorRedirect, "error", "Solicitud inexistente");
+        assertThat(error).isEqualTo(SOLICITUDES_REDIRECT);
+        assertFlash(errorRedirect, ERROR_ATTRIBUTE, "Solicitud inexistente");
     }
 
     private void assertFlash(RedirectAttributesModelMap redirectAttributes, String key, String value) {
-        Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
-        assertThat(flashAttributes.get(key)).isEqualTo(value);
+        Map<String, Object> flashAttributes = new LinkedHashMap<>();
+        redirectAttributes.getFlashAttributes().forEach(flashAttributes::put);
+        assertThat(flashAttributes).containsEntry(key, value);
     }
 }
