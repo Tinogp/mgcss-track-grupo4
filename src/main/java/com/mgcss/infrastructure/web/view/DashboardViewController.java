@@ -23,6 +23,7 @@ public class DashboardViewController {
 
     private static final String MESSAGE_ATTRIBUTE = "mensaje";
     private static final String ERROR_ATTRIBUTE = "error";
+    private static final String UI_REDIRECT = "redirect:/ui";
     private static final String SOLICITUDES_REDIRECT = "redirect:/ui#solicitudes";
 
     private final ClienteService clienteService;
@@ -87,7 +88,7 @@ public class DashboardViewController {
                                RedirectAttributes redirectAttributes) {
         clienteService.crearCliente(nombre, email, tipoCliente);
         redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, "Cliente creado correctamente.");
-        return "redirect:/ui";
+        return UI_REDIRECT;
     }
 
     @PostMapping("/ui/solicitudes")
@@ -100,7 +101,7 @@ public class DashboardViewController {
         } catch (IllegalArgumentException ex) {
             redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());
         }
-        return "redirect:/ui";
+        return UI_REDIRECT;
     }
 
     @PostMapping("/ui/tecnicos")
@@ -109,7 +110,7 @@ public class DashboardViewController {
                                RedirectAttributes redirectAttributes) {
         tecnicoService.crearTecnico(new Tecnico(nombre, especialidad));
         redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, "Tecnico creado correctamente.");
-        return "redirect:/ui";
+        return UI_REDIRECT;
     }
 
     @PostMapping("/ui/tecnicos/{id}/activar")
@@ -117,7 +118,7 @@ public class DashboardViewController {
         boolean activado = tecnicoService.activarTecnico(id);
         redirectAttributes.addFlashAttribute(activado ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,
                 activado ? "Tecnico activado." : "No se pudo activar el tecnico.");
-        return "redirect:/ui";
+        return UI_REDIRECT;
     }
 
     @PostMapping("/ui/solicitudes/{id}/asignar")

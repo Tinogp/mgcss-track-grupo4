@@ -30,7 +30,7 @@
 - Problema identificado: Duplicación de literales en el controlador de la vista y uso de aserciones poco idiomáticas en tests sobre mapas.
 - Métrica asociada: Principalmente afecta a la Mantenibilidad (Maintainability Rating), reduciendo deuda técnica y mejorando la claridad de los tests.
 - Riesgo potencial si no se corrige: Aumento de duplicación, mayor probabilidad de errores al cambiar claves de atributos o rutas, y persistencia de avisos de Sonar en el pipeline.
-- Cambios aplicados: Extracción de constantes para `mensaje`, `error` y `redirect:/ui#solicitudes`, y reemplazo de aserciones con `get(...)` por `containsEntry(...)` cuando corresponde.
+- Cambios aplicados: Extracción de constantes para `mensaje`, `error`, `redirect:/ui` y `redirect:/ui#solicitudes`, y reemplazo de aserciones con `get(...)` por `containsEntry(...)` cuando corresponde.
 
 
 # Métricas finales

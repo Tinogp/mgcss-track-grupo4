@@ -28,6 +28,7 @@ class DashboardViewControllerTest {
 
     private static final String MESSAGE_ATTRIBUTE = "mensaje";
     private static final String ERROR_ATTRIBUTE = "error";
+    private static final String UI_REDIRECT = "redirect:/ui";
     private static final String SOLICITUDES_REDIRECT = "redirect:/ui#solicitudes";
 
     private ClienteService clienteService;
@@ -102,7 +103,7 @@ class DashboardViewControllerTest {
 
         String result = controller.crearCliente("ACME", "acme@test.com", Cliente.TipoCliente.STANDARD, redirect);
 
-        assertThat(result).isEqualTo("redirect:/ui");
+        assertThat(result).isEqualTo(UI_REDIRECT);
         verify(clienteService).crearCliente("ACME", "acme@test.com", Cliente.TipoCliente.STANDARD);
         assertFlash(redirect, MESSAGE_ATTRIBUTE, "Cliente creado correctamente.");
     }
@@ -112,7 +113,7 @@ class DashboardViewControllerTest {
         RedirectAttributesModelMap okRedirect = new RedirectAttributesModelMap();
         String ok = controller.crearSolicitud("Incidencia", 1L, okRedirect);
 
-        assertThat(ok).isEqualTo("redirect:/ui");
+        assertThat(ok).isEqualTo(UI_REDIRECT);
         verify(solicitudService).crearSolicitud("Incidencia", 1L);
         assertFlash(okRedirect, MESSAGE_ATTRIBUTE, "Solicitud registrada correctamente.");
 
@@ -121,7 +122,7 @@ class DashboardViewControllerTest {
 
         String error = controller.crearSolicitud("Mala", 99L, errorRedirect);
 
-        assertThat(error).isEqualTo("redirect:/ui");
+        assertThat(error).isEqualTo(UI_REDIRECT);
         assertFlash(errorRedirect, ERROR_ATTRIBUTE, "Cliente inexistente");
     }
 
@@ -131,7 +132,7 @@ class DashboardViewControllerTest {
 
         String create = controller.crearTecnico("Tecnico Uno", Tecnico.Especialidad.HARDWARE, createRedirect);
 
-        assertThat(create).isEqualTo("redirect:/ui");
+        assertThat(create).isEqualTo(UI_REDIRECT);
         verify(tecnicoService).crearTecnico(any(Tecnico.class));
         assertFlash(createRedirect, MESSAGE_ATTRIBUTE, "Tecnico creado correctamente.");
 
@@ -140,7 +141,7 @@ class DashboardViewControllerTest {
 
         String active = controller.activarTecnico(1L, activeRedirect);
 
-        assertThat(active).isEqualTo("redirect:/ui");
+        assertThat(active).isEqualTo(UI_REDIRECT);
         assertFlash(activeRedirect, MESSAGE_ATTRIBUTE, "Tecnico activado.");
 
         when(tecnicoService.activarTecnico(2L)).thenReturn(false);
@@ -148,7 +149,7 @@ class DashboardViewControllerTest {
 
         String error = controller.activarTecnico(2L, errorRedirect);
 
-        assertThat(error).isEqualTo("redirect:/ui");
+        assertThat(error).isEqualTo(UI_REDIRECT);
         assertFlash(errorRedirect, ERROR_ATTRIBUTE, "No se pudo activar el tecnico.");
     }
 
