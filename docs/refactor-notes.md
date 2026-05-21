@@ -26,6 +26,13 @@
 - Cambios aplicados: Reemplazo de imports wildcard por imports explícitos en entidades JPA, adición de comentarios en constructores vacíos para justificar su uso por JPA, y validación de `save(null)` con la correspondiente prueba unitaria.
 
 
+# Problema 6: corregir nuevos code smells de Sonar
+- Problema identificado: Duplicación de literales en el controlador de la vista y uso de aserciones poco idiomáticas en tests sobre mapas.
+- Métrica asociada: Principalmente afecta a la Mantenibilidad (Maintainability Rating), reduciendo deuda técnica y mejorando la claridad de los tests.
+- Riesgo potencial si no se corrige: Aumento de duplicación, mayor probabilidad de errores al cambiar claves de atributos o rutas, y persistencia de avisos de Sonar en el pipeline.
+- Cambios aplicados: Extracción de constantes para `mensaje`, `error`, `redirect:/ui` y `redirect:/ui#solicitudes`, y reemplazo de aserciones con `get(...)` por `containsEntry(...)` cuando corresponde.
+
+
 # Métricas finales
 
 - Se han eliminado 22 code smells

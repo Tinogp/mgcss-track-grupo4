@@ -1,7 +1,9 @@
 package com.mgcss.unit.service;
 
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,5 +60,18 @@ public class TecnicoServiceTest {
 
         assertFalse(resultado);
         verify(tecnicoRepository, never()).save(org.mockito.ArgumentMatchers.any(Tecnico.class));
+    }
+
+    @Test
+    void listarTecnicosDevuelveTodosLosTecnicosDelRepositorio() {
+        Tecnico tecnicoHardware = new Tecnico("Ana", Tecnico.Especialidad.HARDWARE);
+        Tecnico tecnicoSoftware = new Tecnico("Luis", Tecnico.Especialidad.SOFTWARE);
+        List<Tecnico> tecnicos = List.of(tecnicoHardware, tecnicoSoftware);
+        when(tecnicoRepository.findAll()).thenReturn(tecnicos);
+
+        List<Tecnico> resultado = sut.listarTecnicos();
+
+        assertEquals(tecnicos, resultado);
+        verify(tecnicoRepository).findAll();
     }
 }

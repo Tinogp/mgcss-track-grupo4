@@ -1,5 +1,6 @@
 package com.mgcss.infrastructure;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,13 @@ public class SqlTecnicoRepository implements TecnicoRepository {
     @Override
     public Optional<Tecnico> findById(Long id) {
         return repository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public List<Tecnico> findAll() {
+        return repository.findAll().stream()
+                .map(this::toDomain)
+                .toList();
     }
 
     private TecnicoEntity toEntity(Tecnico tecnico) {
