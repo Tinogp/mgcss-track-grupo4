@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SqlSolicitudRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure</a> &gt; <span class="el_source">SqlSolicitudRepository.java</span></div><h1>SqlSolicitudRepository.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+
+import com.mgcss.domain.Cliente;
+import com.mgcss.domain.Solicitud;
+import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.repository.SolicitudRepository;
+import com.mgcss.infrastructure.persistence.ClienteEntity;
+import com.mgcss.infrastructure.persistence.SolicitudEntity;
+import com.mgcss.infrastructure.persistence.TecnicoEntity;
+
+@Component
+public class SqlSolicitudRepository implements SolicitudRepository {
+
+    private final SpringDataSolicitudRepository jpaSolicitudRepo;
+
+<span class="fc" id="L22">    public SqlSolicitudRepository(SpringDataSolicitudRepository jpaSolicitudRepo) {</span>
+<span class="fc" id="L23">        this.jpaSolicitudRepo = jpaSolicitudRepo;</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    public Solicitud save(Solicitud solicitud) {
+<span class="fc" id="L28">        Objects.requireNonNull(solicitud, &quot;solicitud&quot;);</span>
+        // Mapeo: Dominio -&gt; Entidad
+<span class="fc" id="L30">        SolicitudEntity entity = toEntity(solicitud);</span>
+<span class="fc" id="L31">        SolicitudEntity saved = jpaSolicitudRepo.save(entity);</span>
+        // Mapeo: Entidad -&gt; Dominio
+<span class="fc" id="L33">        return toDomain(saved);</span>
+    }
+
+    @Override
+    public Optional&lt;Solicitud&gt; findById(Long id) {
+<span class="fc" id="L38">        return jpaSolicitudRepo.findById(id).map(this::toDomain);</span>
+    }
+
+    @Override
+    public List&lt;Solicitud&gt; findAll() {
+<span class="nc" id="L43">        return jpaSolicitudRepo.findAll().stream()</span>
+<span class="nc" id="L44">                .map(this::toDomain)</span>
+<span class="nc" id="L45">                .collect(java.util.stream.Collectors.toList());</span>
+    }
+
+    // --- MAPPERS PRIVADOS ---
+
+private SolicitudEntity toEntity(Solicitud dominio) {
+<span class="fc" id="L51">        Objects.requireNonNull(dominio, &quot;dominio&quot;);</span>
+        
+<span class="fc" id="L53">        SolicitudEntity entity = new SolicitudEntity();</span>
+<span class="fc" id="L54">        entity.setId(dominio.getId());</span>
+<span class="fc" id="L55">        entity.setDescripcion(dominio.getDescripcion());</span>
+<span class="fc" id="L56">        entity.setFechaCreacion(dominio.getFechaCreacion());</span>
+<span class="fc" id="L57">        entity.setEstadoActual(dominio.getEstadoActual().name());</span>
+<span class="fc" id="L58">        entity.setFechaCierre(dominio.getFechaCierre());</span>
+
+        // 1. Mapear el Técnico (como ya teníamos)
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (dominio.getTecnicoAsignado() != null) {</span>
+<span class="fc" id="L62">            TecnicoEntity tEntity = new TecnicoEntity();</span>
+<span class="fc" id="L63">            tEntity.setId(dominio.getTecnicoAsignado().getId());</span>
+<span class="fc" id="L64">            tEntity.setNombre(dominio.getTecnicoAsignado().getNombre());</span>
+<span class="fc" id="L65">            tEntity.setEspecialidad(dominio.getTecnicoAsignado().getEspecialidad().name());</span>
+<span class="fc" id="L66">            tEntity.setActivo(dominio.getTecnicoAsignado().isActivo());</span>
+<span class="fc" id="L67">            entity.setTecnicoAsignado(tEntity);</span>
+        }
+
+        // 2. NUEVO: Mapear el Cliente
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        if (dominio.getCliente() != null) {</span>
+<span class="fc" id="L72">            ClienteEntity cEntity = new ClienteEntity();</span>
+<span class="fc" id="L73">            cEntity.setId(dominio.getCliente().getId());</span>
+<span class="fc" id="L74">            cEntity.setNombre(dominio.getCliente().getNombre());</span>
+<span class="fc" id="L75">            cEntity.setEmail(dominio.getCliente().getEmail());</span>
+<span class="fc" id="L76">            cEntity.setTipoCliente(dominio.getCliente().getTipoCliente().name()); // Enum a String</span>
+<span class="fc" id="L77">            entity.setCliente(cEntity);</span>
+        }
+
+<span class="fc" id="L80">        return entity;</span>
+    }
+
+    private Solicitud toDomain(SolicitudEntity entity) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (entity == null) return null;</span>
+        
+        // 1. Reconstruir Técnico
+<span class="fc" id="L87">        Tecnico tecnico = null;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (entity.getTecnicoAsignado() != null) {</span>
+<span class="fc" id="L89">            tecnico = new Tecnico(</span>
+<span class="fc" id="L90">                entity.getTecnicoAsignado().getId(),</span>
+<span class="fc" id="L91">                entity.getTecnicoAsignado().getNombre(),</span>
+<span class="fc" id="L92">                Tecnico.Especialidad.valueOf(entity.getTecnicoAsignado().getEspecialidad()),</span>
+<span class="fc" id="L93">                entity.getTecnicoAsignado().isActivo()</span>
+            );
+        }
+
+        // 2. NUEVO: Reconstruir Cliente
+<span class="fc" id="L98">        Cliente cliente = null;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (entity.getCliente() != null) {</span>
+<span class="fc" id="L100">            cliente = new Cliente(</span>
+<span class="fc" id="L101">                entity.getCliente().getId(),</span>
+<span class="fc" id="L102">                entity.getCliente().getNombre(),</span>
+<span class="fc" id="L103">                entity.getCliente().getEmail(),</span>
+<span class="fc" id="L104">                Cliente.TipoCliente.valueOf(entity.getCliente().getTipoCliente()) // String a Enum</span>
+            );
+        }
+
+        // 3. Devolver la Solicitud completa usando el constructor actualizado
+<span class="fc" id="L109">        return new Solicitud(</span>
+<span class="fc" id="L110">            entity.getId(),</span>
+<span class="fc" id="L111">            entity.getDescripcion(),</span>
+            cliente, // Pasamos el cliente aquí
+<span class="fc" id="L113">            entity.getFechaCreacion(),</span>
+<span class="fc" id="L114">            Solicitud.Estado.valueOf(entity.getEstadoActual()),</span>
+            tecnico,
+<span class="fc" id="L116">            entity.getFechaCierre()</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

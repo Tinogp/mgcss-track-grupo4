@@ -24,8 +24,6 @@ hs_err_pid*
 replay_pid*
 .vscode/settings.json
 
-# Ignore target directory
-target/
-
+# Ignore targe
 # Maven wrapper/cache used by local runs
 .maven-cache/

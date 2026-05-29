@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServiceConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.config</a> &gt; <span class="el_source">ServiceConfig.java</span></div><h1>ServiceConfig.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.mgcss.domain.repository.ClienteRepository;
+import com.mgcss.domain.repository.RegisterSolicitudRepository;
+import com.mgcss.domain.repository.SolicitudRepository;
+import com.mgcss.domain.repository.TecnicoRepository;
+import com.mgcss.service.ClienteService;
+import com.mgcss.service.SolicitudService;
+import com.mgcss.service.TecnicoService;
+
+@Configuration
+<span class="fc" id="L15">public class ServiceConfig {</span>
+
+    @Bean
+    public SolicitudService solicitudService(SolicitudRepository solicitudRepository,
+                                             TecnicoRepository tecnicoRepository,
+                                             RegisterSolicitudRepository registerSolicitudRepository,
+                                             ClienteRepository clienteRepository) {
+<span class="fc" id="L22">        return new SolicitudService(solicitudRepository, tecnicoRepository, registerSolicitudRepository, clienteRepository);</span>
+    }
+
+    @Bean
+    public ClienteService clienteService(ClienteRepository clienteRepository) {
+<span class="fc" id="L27">        return new ClienteService(clienteRepository);</span>
+    }
+
+    @Bean
+    public TecnicoService tecnicoService(TecnicoRepository tecnicoRepository) {
+<span class="fc" id="L32">        return new TecnicoService(tecnicoRepository);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

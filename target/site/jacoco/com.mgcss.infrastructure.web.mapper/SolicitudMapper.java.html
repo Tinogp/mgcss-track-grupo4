@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolicitudMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.web.mapper</a> &gt; <span class="el_source">SolicitudMapper.java</span></div><h1>SolicitudMapper.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.web.mapper;
+
+import com.mgcss.domain.Solicitud;
+import com.mgcss.infrastructure.web.dto.SolicitudResponseDTO;
+import org.springframework.stereotype.Component;
+
+@Component
+<span class="fc" id="L8">public class SolicitudMapper {</span>
+
+    public SolicitudResponseDTO toResponseDTO(Solicitud solicitud) {
+<span class="fc bfc" id="L11" title="All 2 branches covered.">        if (solicitud == null) {</span>
+<span class="fc" id="L12">            return null;</span>
+        }
+
+<span class="fc" id="L15">        SolicitudResponseDTO dto = new SolicitudResponseDTO();</span>
+<span class="fc" id="L16">        dto.setId(solicitud.getId());</span>
+<span class="fc" id="L17">        dto.setDescripcion(solicitud.getDescripcion());</span>
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">        dto.setEstadoActual(solicitud.getEstadoActual() != null ? solicitud.getEstadoActual().name() : null);</span>
+<span class="fc" id="L19">        dto.setFechaCreacion(solicitud.getFechaCreacion());</span>
+<span class="fc" id="L20">        dto.setFechaCierre(solicitud.getFechaCierre());</span>
+
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (solicitud.getCliente() != null) {</span>
+<span class="fc" id="L23">            dto.setClienteId(solicitud.getCliente().getId());</span>
+<span class="fc" id="L24">            dto.setClienteNombre(solicitud.getCliente().getNombre());</span>
+        }
+
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (solicitud.getTecnicoAsignado() != null) {</span>
+<span class="fc" id="L28">            dto.setTecnicoId(solicitud.getTecnicoAsignado().getId());</span>
+<span class="fc" id="L29">            dto.setTecnicoNombre(solicitud.getTecnicoAsignado().getNombre());</span>
+        }
+
+<span class="fc" id="L32">        return dto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

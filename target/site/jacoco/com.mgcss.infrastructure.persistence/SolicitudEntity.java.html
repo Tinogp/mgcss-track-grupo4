@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolicitudEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.persistence</a> &gt; <span class="el_source">SolicitudEntity.java</span></div><h1>SolicitudEntity.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.persistence;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = &quot;solicitudes&quot;)
+public class SolicitudEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String descripcion;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;cliente_id&quot;)
+    private ClienteEntity cliente; // Usamos ClienteEntity, no el Cliente del dominio
+    
+    private LocalDateTime fechaCreacion;
+
+    // Guardamos el Enum como un String en la BD para que sea legible (ej. &quot;ABIERTA&quot;)
+    private String estadoActual;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;tecnico_id&quot;)
+    private TecnicoEntity tecnicoAsignado; // Usamos TecnicoEntity, no el Tecnico del dominio
+
+    private LocalDateTime fechaCierre;
+
+<span class="fc" id="L37">    public SolicitudEntity() {</span>
+        // Constructor vacío obligatorio para JPA
+<span class="fc" id="L39">    }</span>
+
+    // --- Solo Getters y Setters a partir de aquí ---
+
+    public Long getId() {
+<span class="fc" id="L44">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L48">        this.id = id;</span>
+<span class="fc" id="L49">    }</span>
+
+    public String getDescripcion() {
+<span class="fc" id="L52">        return descripcion;</span>
+    }
+
+    public void setDescripcion(String descripcion) {
+<span class="fc" id="L56">        this.descripcion = descripcion;</span>
+<span class="fc" id="L57">    }</span>
+
+    public ClienteEntity getCliente() {
+<span class="fc" id="L60">        return cliente;</span>
+    }
+
+    public void setCliente(ClienteEntity cliente) {
+<span class="fc" id="L64">        this.cliente = cliente;</span>
+<span class="fc" id="L65">    }</span>
+
+    public LocalDateTime getFechaCreacion() {
+<span class="fc" id="L68">        return fechaCreacion;</span>
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+<span class="fc" id="L72">        this.fechaCreacion = fechaCreacion;</span>
+<span class="fc" id="L73">    }</span>
+
+    public String getEstadoActual() {
+<span class="fc" id="L76">        return estadoActual;</span>
+    }
+
+    public void setEstadoActual(String estadoActual) {
+<span class="fc" id="L80">        this.estadoActual = estadoActual;</span>
+<span class="fc" id="L81">    }</span>
+
+    public TecnicoEntity getTecnicoAsignado() {
+<span class="fc" id="L84">        return tecnicoAsignado;</span>
+    }
+
+    public void setTecnicoAsignado(TecnicoEntity tecnicoAsignado) {
+<span class="fc" id="L88">        this.tecnicoAsignado = tecnicoAsignado;</span>
+<span class="fc" id="L89">    }</span>
+
+    public LocalDateTime getFechaCierre() {
+<span class="fc" id="L92">        return fechaCierre;</span>
+    }
+
+    public void setFechaCierre(LocalDateTime fechaCierre) {
+<span class="fc" id="L96">        this.fechaCierre = fechaCierre;</span>
+<span class="fc" id="L97">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

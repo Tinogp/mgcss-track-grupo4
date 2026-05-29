@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegisterSolicitudEntity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.persistence</a> &gt; <span class="el_source">RegisterSolicitudEntity.java</span></div><h1>RegisterSolicitudEntity.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.persistence;
+
+import java.time.LocalDateTime;
+
+import com.mgcss.domain.Solicitud;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = &quot;register_solicitud&quot;)
+public class RegisterSolicitudEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = &quot;solicitud_id&quot;, nullable = false)
+    private Long solicitudId;
+
+    private LocalDateTime fechaHora;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;estado_anterior&quot;)
+    private Solicitud.Estado estadoAnterior;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;estado_actual&quot;)
+    private Solicitud.Estado estadoActual;
+
+<span class="fc" id="L37">    public RegisterSolicitudEntity(){</span>
+        // Constructor vacío obligatorio para JPA
+<span class="fc" id="L39">    }</span>
+
+<span class="fc" id="L41">    public RegisterSolicitudEntity(Long solicitudId, Solicitud.Estado estadoAnterior, Solicitud.Estado estadoActual) {</span>
+<span class="fc" id="L42">        this.solicitudId = solicitudId;</span>
+<span class="fc" id="L43">        this.fechaHora = LocalDateTime.now();</span>
+<span class="fc" id="L44">        this.estadoAnterior = estadoAnterior;</span>
+<span class="fc" id="L45">        this.estadoActual = estadoActual;</span>
+<span class="fc" id="L46">    }</span>
+
+    public Long getId() {
+<span class="fc" id="L49">        return id;</span>
+    }
+
+    public Long getSolicitudId() {
+<span class="fc" id="L53">        return solicitudId;</span>
+    }
+
+    public LocalDateTime getFechaHora() {
+<span class="fc" id="L57">        return fechaHora;</span>
+    }
+
+    public Solicitud.Estado getEstadoAnterior() {
+<span class="fc" id="L61">        return estadoAnterior;</span>
+    }
+
+    public Solicitud.Estado getEstadoActual() {
+<span class="fc" id="L65">        return estadoActual;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

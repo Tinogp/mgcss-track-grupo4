@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClienteRequestDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.web.dto</a> &gt; <span class="el_source">ClienteRequestDTO.java</span></div><h1>ClienteRequestDTO.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.web.dto;
+
+import com.mgcss.domain.Cliente;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = &quot;Datos para el alta de un nuevo cliente&quot;)
+public class ClienteRequestDTO {
+
+    @Schema(description = &quot;Nombre o razón social del cliente&quot;, example = &quot;Talleres Pérez&quot;)
+    private String nombre;
+    
+    @Schema(description = &quot;Correo electrónico institucional&quot;, example = &quot;contacto@talleresperez.com&quot;)
+    private String email;
+    
+    @Schema(description = &quot;Nivel de contrato del cliente&quot;, example = &quot;PREMIUM&quot;)
+    private Cliente.TipoCliente tipoCliente;
+
+<span class="nc" id="L19">    public ClienteRequestDTO() {}</span>
+
+<span class="fc" id="L21">    public ClienteRequestDTO(String nombre, String email, Cliente.TipoCliente tipoCliente) {</span>
+<span class="fc" id="L22">        this.nombre = nombre;</span>
+<span class="fc" id="L23">        this.email = email;</span>
+<span class="fc" id="L24">        this.tipoCliente = tipoCliente;</span>
+<span class="fc" id="L25">    }</span>
+
+<span class="fc" id="L27">    public String getNombre() { return nombre; }</span>
+<span class="nc" id="L28">    public void setNombre(String nombre) { this.nombre = nombre; }</span>
+<span class="fc" id="L29">    public String getEmail() { return email; }</span>
+<span class="nc" id="L30">    public void setEmail(String email) { this.email = email; }</span>
+<span class="fc" id="L31">    public Cliente.TipoCliente getTipoCliente() { return tipoCliente; }</span>
+<span class="nc" id="L32">    public void setTipoCliente(Cliente.TipoCliente tipoCliente) { this.tipoCliente = tipoCliente; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

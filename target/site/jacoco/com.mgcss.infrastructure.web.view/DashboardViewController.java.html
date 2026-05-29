@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DashboardViewController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.web.view</a> &gt; <span class="el_source">DashboardViewController.java</span></div><h1>DashboardViewController.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.web.view;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mgcss.domain.Cliente;
+import com.mgcss.domain.Solicitud;
+import com.mgcss.domain.Tecnico;
+import com.mgcss.service.ClienteService;
+import com.mgcss.service.SolicitudService;
+import com.mgcss.service.TecnicoService;
+
+@Controller
+public class DashboardViewController {
+
+    private static final String MESSAGE_ATTRIBUTE = &quot;mensaje&quot;;
+    private static final String ERROR_ATTRIBUTE = &quot;error&quot;;
+    private static final String SOLICITUDES_REDIRECT = &quot;redirect:/ui#solicitudes&quot;;
+
+    private final ClienteService clienteService;
+    private final SolicitudService solicitudService;
+    private final TecnicoService tecnicoService;
+
+    public DashboardViewController(ClienteService clienteService,
+                                   SolicitudService solicitudService,
+<span class="nc" id="L34">                                   TecnicoService tecnicoService) {</span>
+<span class="nc" id="L35">        this.clienteService = clienteService;</span>
+<span class="nc" id="L36">        this.solicitudService = solicitudService;</span>
+<span class="nc" id="L37">        this.tecnicoService = tecnicoService;</span>
+<span class="nc" id="L38">    }</span>
+
+    @GetMapping({&quot;/&quot;, &quot;/ui&quot;})
+    public String dashboard(@RequestParam(required = false) Long solicitudId, Model model) {
+<span class="nc" id="L42">        List&lt;Cliente&gt; clientes = clienteService.getAllCliente();</span>
+<span class="nc" id="L43">        List&lt;Solicitud&gt; solicitudes = solicitudService.listarSolicitudes();</span>
+<span class="nc" id="L44">        List&lt;Tecnico&gt; tecnicos = tecnicoService.listarTecnicos();</span>
+<span class="nc" id="L45">        List&lt;Tecnico&gt; tecnicosActivosLista = tecnicos.stream()</span>
+<span class="nc" id="L46">                .filter(Tecnico::isActivo)</span>
+<span class="nc" id="L47">                .toList();</span>
+<span class="nc" id="L48">        Optional&lt;Solicitud&gt; solicitudSeleccionada = Optional.empty();</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (solicitudId != null) {</span>
+<span class="nc" id="L51">            solicitudSeleccionada = solicitudService.obtenerSolicitud(solicitudId);</span>
+        }
+
+<span class="nc" id="L54">        long abiertas = solicitudes.stream()</span>
+<span class="nc" id="L55">                .filter(solicitud -&gt; Solicitud.Estado.ABIERTA.equals(solicitud.getEstadoActual()))</span>
+<span class="nc" id="L56">                .count();</span>
+<span class="nc" id="L57">        long enProceso = solicitudes.stream()</span>
+<span class="nc" id="L58">                .filter(solicitud -&gt; Solicitud.Estado.EN_PROCESO.equals(solicitud.getEstadoActual()))</span>
+<span class="nc" id="L59">                .count();</span>
+<span class="nc" id="L60">        long cerradas = solicitudes.stream()</span>
+<span class="nc" id="L61">                .filter(solicitud -&gt; Solicitud.Estado.CERRADA.equals(solicitud.getEstadoActual()))</span>
+<span class="nc" id="L62">                .count();</span>
+
+<span class="nc" id="L64">        model.addAttribute(&quot;clientes&quot;, clientes);</span>
+<span class="nc" id="L65">        model.addAttribute(&quot;solicitudes&quot;, solicitudes);</span>
+<span class="nc" id="L66">        model.addAttribute(&quot;tecnicos&quot;, tecnicos);</span>
+<span class="nc" id="L67">        model.addAttribute(&quot;tecnicosActivosLista&quot;, tecnicosActivosLista);</span>
+<span class="nc" id="L68">        model.addAttribute(&quot;solicitudConsultada&quot;, solicitudSeleccionada.orElse(null));</span>
+<span class="nc" id="L69">        model.addAttribute(&quot;solicitudConsultadaId&quot;, solicitudId);</span>
+<span class="nc" id="L70">        model.addAttribute(&quot;totalClientes&quot;, clientes.size());</span>
+<span class="nc" id="L71">        model.addAttribute(&quot;totalSolicitudes&quot;, solicitudes.size());</span>
+<span class="nc" id="L72">        model.addAttribute(&quot;totalTecnicos&quot;, tecnicos.size());</span>
+<span class="nc" id="L73">        model.addAttribute(&quot;tecnicosActivos&quot;, tecnicos.stream().filter(Tecnico::isActivo).count());</span>
+<span class="nc" id="L74">        model.addAttribute(&quot;solicitudesAbiertas&quot;, abiertas);</span>
+<span class="nc" id="L75">        model.addAttribute(&quot;solicitudesEnProceso&quot;, enProceso);</span>
+<span class="nc" id="L76">        model.addAttribute(&quot;solicitudesCerradas&quot;, cerradas);</span>
+<span class="nc" id="L77">        model.addAttribute(&quot;tiposCliente&quot;, Cliente.TipoCliente.values());</span>
+<span class="nc" id="L78">        model.addAttribute(&quot;especialidades&quot;, Tecnico.Especialidad.values());</span>
+
+<span class="nc" id="L80">        return &quot;dashboard&quot;;</span>
+    }
+
+    @PostMapping(&quot;/ui/clientes&quot;)
+    public String crearCliente(@RequestParam String nombre,
+                               @RequestParam String email,
+                               @RequestParam Cliente.TipoCliente tipoCliente,
+                               RedirectAttributes redirectAttributes) {
+<span class="nc" id="L88">        clienteService.crearCliente(nombre, email, tipoCliente);</span>
+<span class="nc" id="L89">        redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, &quot;Cliente creado correctamente.&quot;);</span>
+<span class="nc" id="L90">        return &quot;redirect:/ui&quot;;</span>
+    }
+
+    @PostMapping(&quot;/ui/solicitudes&quot;)
+    public String crearSolicitud(@RequestParam String descripcion,
+                                 @RequestParam Long clienteId,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+<span class="nc" id="L98">            solicitudService.crearSolicitud(descripcion, clienteId);</span>
+<span class="nc" id="L99">            redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, &quot;Solicitud registrada correctamente.&quot;);</span>
+<span class="nc" id="L100">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L101">            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());</span>
+<span class="nc" id="L102">        }</span>
+<span class="nc" id="L103">        return &quot;redirect:/ui&quot;;</span>
+    }
+
+    @PostMapping(&quot;/ui/tecnicos&quot;)
+    public String crearTecnico(@RequestParam String nombre,
+                               @RequestParam Tecnico.Especialidad especialidad,
+                               RedirectAttributes redirectAttributes) {
+<span class="nc" id="L110">        tecnicoService.crearTecnico(new Tecnico(nombre, especialidad));</span>
+<span class="nc" id="L111">        redirectAttributes.addFlashAttribute(MESSAGE_ATTRIBUTE, &quot;Tecnico creado correctamente.&quot;);</span>
+<span class="nc" id="L112">        return &quot;redirect:/ui&quot;;</span>
+    }
+
+    @PostMapping(&quot;/ui/tecnicos/{id}/activar&quot;)
+    public String activarTecnico(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+<span class="nc" id="L117">        boolean activado = tecnicoService.activarTecnico(id);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        redirectAttributes.addFlashAttribute(activado ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                activado ? &quot;Tecnico activado.&quot; : &quot;No se pudo activar el tecnico.&quot;);</span>
+<span class="nc" id="L120">        return &quot;redirect:/ui&quot;;</span>
+    }
+
+    @PostMapping(&quot;/ui/solicitudes/{id}/asignar&quot;)
+    public String asignarTecnico(@PathVariable Long id,
+                                 @RequestParam Long tecnicoId,
+                                 RedirectAttributes redirectAttributes) {
+        try {
+<span class="nc" id="L128">            boolean asignada = solicitudService.asignarTecnico(id, tecnicoId);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            redirectAttributes.addFlashAttribute(asignada ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                    asignada ? &quot;Tecnico asignado a la solicitud.&quot; : &quot;No se pudo asignar el tecnico.&quot;);</span>
+<span class="nc" id="L131">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L132">            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());</span>
+<span class="nc" id="L133">        }</span>
+<span class="nc" id="L134">        return SOLICITUDES_REDIRECT;</span>
+    }
+
+    @PostMapping(&quot;/ui/solicitudes/{id}/iniciar&quot;)
+    public String iniciarProceso(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+<span class="nc" id="L140">            boolean iniciada = solicitudService.iniciarProceso(id);</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            redirectAttributes.addFlashAttribute(iniciada ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">                    iniciada ? &quot;Solicitud puesta en proceso.&quot; : &quot;La solicitud necesita un tecnico asignado para iniciarse.&quot;);</span>
+<span class="nc" id="L143">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L144">            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());</span>
+<span class="nc" id="L145">        }</span>
+<span class="nc" id="L146">        return SOLICITUDES_REDIRECT;</span>
+    }
+
+    @PostMapping(&quot;/ui/solicitudes/{id}/cerrar&quot;)
+    public String cerrarSolicitud(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+<span class="nc" id="L152">            boolean cerrada = solicitudService.cerrarSolicitud(id);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            redirectAttributes.addFlashAttribute(cerrada ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">                    cerrada ? &quot;Solicitud cerrada.&quot; : &quot;La solicitud no se puede cerrar en su estado actual.&quot;);</span>
+<span class="nc" id="L155">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L156">            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());</span>
+<span class="nc" id="L157">        }</span>
+<span class="nc" id="L158">        return SOLICITUDES_REDIRECT;</span>
+    }
+
+    @PostMapping(&quot;/ui/solicitudes/{id}/reabrir&quot;)
+    public String reabrirSolicitud(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+<span class="nc" id="L164">            boolean reabierta = solicitudService.reabrirSolicitud(id);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            redirectAttributes.addFlashAttribute(reabierta ? MESSAGE_ATTRIBUTE : ERROR_ATTRIBUTE,</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">                    reabierta ? &quot;Solicitud reabierta.&quot; : &quot;La solicitud no se puede reabrir en su estado actual.&quot;);</span>
+<span class="nc" id="L167">        } catch (IllegalArgumentException ex) {</span>
+<span class="nc" id="L168">            redirectAttributes.addFlashAttribute(ERROR_ATTRIBUTE, ex.getMessage());</span>
+<span class="nc" id="L169">        }</span>
+<span class="nc" id="L170">        return SOLICITUDES_REDIRECT;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
