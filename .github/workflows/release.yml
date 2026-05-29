@@ -26,18 +26,22 @@ jobs:
 
       # FASE 5: Quality Gate (Tests + SonarQube)
       # Esto fallará si el Quality Gate no pasa, impidiendo la liberación de la versión.
-      - name: Build project, run tests and SonarQube
+      - name: Build and package with Maven
+        run: mvn -B clean package
+
+      - name: Run SonarQube Quality Gate
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_CLOUD }}
         run: >
-          mvn -B clean verify 
-          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
+          mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
           -Dsonar.projectKey=Tinogp_mgcss-track-grupo4 
           -Dsonar.host.url=https://sonarcloud.io
 
       - id: release_jar
         name: Resolve release JAR
         run: |
+          echo "=== Contenido del directorio target ==="
+          find target -maxdepth 2 || echo "No se encontró el directorio target"
           JAR_PATH=$(find target -maxdepth 1 -name "*.jar" ! -name "*.original" | head -n 1)
           if [ -z "$JAR_PATH" ]; then
             echo "No release JAR found in target/"
