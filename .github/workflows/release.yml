@@ -96,8 +96,9 @@ jobs:
             - JAR artifact: ${{ steps.release_jar.outputs.JAR_PATH }}
             - Handout ZIP: ${{ steps.create_handout_zip.outputs.ZIP_PATH }}
             - Docker image: ghcr.io/${{ steps.lowercase_owner.outputs.OWNER }}/mgcss-track-grupo4:${{ github.ref_name }} and latest
+          fail_on_unmatched_files: true
           files: |
-            ${{ steps.release_jar.outputs.JAR_PATH }}
+            target/*.jar
             ${{ steps.create_handout_zip.outputs.ZIP_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
