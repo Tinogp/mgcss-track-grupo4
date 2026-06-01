@@ -27,7 +27,7 @@ jobs:
       # FASE 5: Quality Gate (Tests + SonarQube)
       # Esto fallará si el Quality Gate no pasa, impidiendo la liberación de la versión.
       - name: Build and package with Maven
-        run: mvn -B clean package
+        run: mvn -B clean verify
 
       - name: Run SonarQube Quality Gate
         env:
@@ -37,6 +37,7 @@ jobs:
           -Dsonar.projectKey=Tinogp_mgcss-track-grupo4 
           -Dsonar.organization=tinogp 
           -Dsonar.branch.name=main 
+          -Dsonar.exclusions=.github/workflows/** 
           -Dsonar.host.url=https://sonarcloud.io 
           -Dsonar.qualitygate.wait=true
 
