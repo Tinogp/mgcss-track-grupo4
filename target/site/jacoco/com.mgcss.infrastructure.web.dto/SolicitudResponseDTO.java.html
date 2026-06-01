@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SolicitudResponseDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure.web.dto</a> &gt; <span class="el_source">SolicitudResponseDTO.java</span></div><h1>SolicitudResponseDTO.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure.web.dto;
+
+import java.time.LocalDateTime;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = &quot;Estado completo de una solicitud de servicio&quot;)
+public class SolicitudResponseDTO {
+
+    @Schema(description = &quot;ID de la solicitud&quot;, example = &quot;100&quot;)
+    private Long id;
+    
+    @Schema(description = &quot;Descripción de la incidencia&quot;, example = &quot;El servidor no arranca&quot;)
+    private String descripcion;
+    
+    @Schema(description = &quot;Estado actual del proceso&quot;, example = &quot;EN_PROCESO&quot;)
+    private String estadoActual;
+    
+    @Schema(description = &quot;Fecha de apertura de la solicitud&quot;)
+    private LocalDateTime fechaCreacion;
+    
+    @Schema(description = &quot;Fecha de finalización (si aplica)&quot;)
+    private LocalDateTime fechaCierre;
+    
+    @Schema(description = &quot;ID del cliente solicitante&quot;, example = &quot;10&quot;)
+    private Long clienteId;
+    
+    @Schema(description = &quot;Nombre del cliente&quot;, example = &quot;Talleres Pérez&quot;)
+    private String clienteNombre;
+    
+    @Schema(description = &quot;ID del técnico asignado&quot;, example = &quot;1&quot;)
+    private Long tecnicoId;
+    
+    @Schema(description = &quot;Nombre del técnico encargado&quot;, example = &quot;Marta García&quot;)
+    private String tecnicoNombre;
+
+<span class="fc" id="L37">    public SolicitudResponseDTO() {}</span>
+
+    // Getters y Setters necesarios para el mapper
+<span class="fc" id="L40">    public Long getId() { return id; }</span>
+<span class="fc" id="L41">    public void setId(Long id) { this.id = id; }</span>
+<span class="fc" id="L42">    public String getDescripcion() { return descripcion; }</span>
+<span class="fc" id="L43">    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }</span>
+<span class="fc" id="L44">    public String getEstadoActual() { return estadoActual; }</span>
+<span class="fc" id="L45">    public void setEstadoActual(String estadoActual) { this.estadoActual = estadoActual; }</span>
+<span class="fc" id="L46">    public LocalDateTime getFechaCreacion() { return fechaCreacion; }</span>
+<span class="fc" id="L47">    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }</span>
+<span class="fc" id="L48">    public LocalDateTime getFechaCierre() { return fechaCierre; }</span>
+<span class="fc" id="L49">    public void setFechaCierre(LocalDateTime fechaCierre) { this.fechaCierre = fechaCierre; }</span>
+<span class="fc" id="L50">    public Long getClienteId() { return clienteId; }</span>
+<span class="fc" id="L51">    public void setClienteId(Long clienteId) { this.clienteId = clienteId; }</span>
+<span class="fc" id="L52">    public String getClienteNombre() { return clienteNombre; }</span>
+<span class="fc" id="L53">    public void setClienteNombre(String clienteNombre) { this.clienteNombre = clienteNombre; }</span>
+<span class="fc" id="L54">    public Long getTecnicoId() { return tecnicoId; }</span>
+<span class="fc" id="L55">    public void setTecnicoId(Long tecnicoId) { this.tecnicoId = tecnicoId; }</span>
+<span class="fc" id="L56">    public String getTecnicoNombre() { return tecnicoNombre; }</span>
+<span class="fc" id="L57">    public void setTecnicoNombre(String tecnicoNombre) { this.tecnicoNombre = tecnicoNombre; }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

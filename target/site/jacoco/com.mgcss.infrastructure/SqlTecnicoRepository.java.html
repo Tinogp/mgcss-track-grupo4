@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SqlTecnicoRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">mgcss-track-grupo4</a> &gt; <a href="index.source.html" class="el_package">com.mgcss.infrastructure</a> &gt; <span class="el_source">SqlTecnicoRepository.java</span></div><h1>SqlTecnicoRepository.java</h1><pre class="source lang-java linenums">package com.mgcss.infrastructure;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
+import com.mgcss.domain.Tecnico;
+import com.mgcss.domain.repository.TecnicoRepository;
+import com.mgcss.infrastructure.persistence.TecnicoEntity;
+
+@Repository
+public class SqlTecnicoRepository implements TecnicoRepository {
+
+    private final SpringDataTecnicoRepository repository;
+
+<span class="fc" id="L17">    public SqlTecnicoRepository(SpringDataTecnicoRepository repository) {</span>
+<span class="fc" id="L18">        this.repository = repository;</span>
+<span class="fc" id="L19">    }</span>
+
+    @Override
+    public Tecnico save(Tecnico tecnico) {
+<span class="fc" id="L23">        TecnicoEntity entity = toEntity(tecnico);</span>
+<span class="fc" id="L24">        TecnicoEntity saved = repository.save(entity);</span>
+<span class="fc" id="L25">        return toDomain(saved);</span>
+    }
+
+    @Override
+    public Optional&lt;Tecnico&gt; findById(Long id) {
+<span class="fc" id="L30">        return repository.findById(id).map(this::toDomain);</span>
+    }
+
+    @Override
+    public List&lt;Tecnico&gt; findAll() {
+<span class="nc" id="L35">        return repository.findAll().stream()</span>
+<span class="nc" id="L36">                .map(this::toDomain)</span>
+<span class="nc" id="L37">                .toList();</span>
+    }
+
+    private TecnicoEntity toEntity(Tecnico tecnico) {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (tecnico == null) return null;</span>
+<span class="fc" id="L42">        TecnicoEntity entity = new TecnicoEntity();</span>
+<span class="fc" id="L43">        entity.setId(tecnico.getId());</span>
+<span class="fc" id="L44">        entity.setNombre(tecnico.getNombre());</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (tecnico.getEspecialidad() != null) {</span>
+<span class="fc" id="L46">            entity.setEspecialidad(tecnico.getEspecialidad().name());</span>
+        }
+<span class="fc" id="L48">        entity.setActivo(tecnico.isActivo());</span>
+<span class="fc" id="L49">        return entity;</span>
+    }
+
+    private Tecnico toDomain(TecnicoEntity entity) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (entity == null) return null;</span>
+<span class="fc" id="L54">        Tecnico.Especialidad especialidad = null;</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (entity.getEspecialidad() != null) {</span>
+<span class="fc" id="L56">            especialidad = Tecnico.Especialidad.valueOf(entity.getEspecialidad());</span>
+        }
+<span class="fc" id="L58">        return new Tecnico(</span>
+<span class="fc" id="L59">            entity.getId(),</span>
+<span class="fc" id="L60">            entity.getNombre(),</span>
+            especialidad,
+<span class="fc" id="L62">            entity.isActivo()</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
