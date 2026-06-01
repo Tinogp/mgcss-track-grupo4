@@ -35,6 +35,8 @@ jobs:
         run: >
           mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
           -Dsonar.projectKey=Tinogp_mgcss-track-grupo4 
+          -Dsonar.organization=tinogp 
+          -Dsonar.branch.name=main 
           -Dsonar.host.url=https://sonarcloud.io 
           -Dsonar.qualitygate.wait=true
 
